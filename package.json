@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "ejs": "^2.5.6",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "pg": "^7.12.1"
   },
   "devDependencies": {
     "request": "^2.81.0",
@@ -20,10 +21,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vietluonghoang/analytics-server"
+    "url": "git+https://github.com/vietluonghoang/analytics-server.git"
   },
   "keywords": [
     "wethoong"
   ],
-  "license": "wethoong"
+  "license": "wethoong",
+  "bugs": {
+    "url": "https://github.com/vietluonghoang/analytics-server/issues"
+  },
+  "homepage": "https://github.com/vietluonghoang/analytics-server#readme",
+  "author": "VietLuong"
 }
