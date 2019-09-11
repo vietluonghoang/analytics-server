@@ -13,10 +13,10 @@
 	</ul>
 	<br>
 	<br>
-	<table>
-		<tr><td>User's ID for Vendor</td><td>Times of appear</td></tr>
+	<table border="1" cellspacing="5">
+		<tr><td align="center">User's ID for Vendor</td><td align="center">Times of appear</td></tr>
 		<% eventCountByUsers.forEach(function(r) { %>
-        	<tr><td><%= r.idforvendor %> </td><td> <%= r.count %></td></tr>
+        	<tr><td><%= r.idforvendor %> </td><td align="center"> <%= r.count %></td></tr>
     	<% }); %>
 	</table>
 </div>
