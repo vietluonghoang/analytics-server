@@ -12,10 +12,10 @@
 <h2>Database Results</h2>
 
 <ul>
-	<li><b>Number of users: </b><%results.length%></li>
+	<li><b>Number of users: </b><%eventCountByUsers.length%></li>
 	<br>
 	<br>
-    <% results.forEach(function(r) { %>
+    <% eventCountByUsers.forEach(function(r) { %>
         <li><%= r.idforvendor %> - <%= r.count %></li>
     <% }); %>
 </ul>

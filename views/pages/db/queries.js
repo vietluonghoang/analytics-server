@@ -7,12 +7,12 @@ const pool = new Pool({
 
 const viewAnalytics = async (request, response) => {
   try {
-      const result = await pool.query('SELECT * FROM user_info ORDER BY idforvendor, adsid');
-      console.log('raw result is ',result);
+      // const result = await pool.query('SELECT * FROM user_info ORDER BY idforvendor, adsid');
+      // console.log('raw result is ',result);
       const countPerUser = await pool.query('select idforvendor, count(idforvendor) from user_info group by idforvendor');
       
       const results = {eventCountByUsers: (countPerUser) ? countPerUser.rows : null};
-      console.log('manipulated result is ',results);
+      // console.log('manipulated result is ',results);
       response.render('pages/db', results );
     } catch (err) {
       console.error(err);
