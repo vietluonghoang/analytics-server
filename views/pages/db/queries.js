@@ -7,8 +7,8 @@ const pool = new Pool({
 
 const viewAnalytics = (request, response) => {
   try {
-      const client = await pool.connect()
-      const result = await client.query('SELECT * FROM user_info ORDER BY idforvendor, adsid');
+      const client = pool.connect()
+      const result = client.query('SELECT * FROM user_info ORDER BY idforvendor, adsid');
       const results = { 'results': (result) ? result.rows : null};
       res.render('pages/db', results );
       client.release();
