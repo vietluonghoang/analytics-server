@@ -9,10 +9,10 @@ const viewAnalytics = (request, response) => {
   try {
       const result = pool.query('SELECT * FROM user_info ORDER BY idforvendor, adsid');
       const results = { 'results': (result) ? result.rows : null};
-      res.render('pages/db', results );
+      response.render('pages/db', results );
     } catch (err) {
       console.error(err);
-      res.send("Error " + err);
+      response.send("Error " + err);
     }
 }
 
