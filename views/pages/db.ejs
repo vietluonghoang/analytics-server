@@ -12,18 +12,15 @@
 <h2>Database Results</h2>
 
 <ul>
-	<%var rowCount = 0%>
+	<li><b>Number of users: </b>
+		<%= eventCountByUsers.length%>
+	</li>
 	<br>
 	<br>
-    <% eventCountByUsers.forEach(function(r) { rowCount++; %>
+    <% eventCountByUsers.forEach(function(r) { %>
         <li><%= r.idforvendor %> - <%= r.count %></li>
-
     <% }); %>
 </ul>
-<p><b>Number of users: </b>
-		<%rowCount%>
-	</p>
-
 
 </div>
 
