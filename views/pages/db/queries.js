@@ -29,12 +29,14 @@ const getUserById = (request, response) => {
 const createUser = (request, response) => {
   const { idforvendor, adsid } = request.body
 
-  pool.query('INSERT INTO user_info (idforvendor, adsid) VALUES ($1, $2)', [idforvendor, adsid], (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(201).send(`User added with ID: ${result.insertId}`)
-  })
+  response.status(201).send(`User added with ID: ${idforvendor}`)
+
+  // pool.query('INSERT INTO user_info (idforvendor, adsid) VALUES ($1, $2)', [idforvendor, adsid], (error, results) => {
+  //   if (error) {
+  //     throw error
+  //   }
+  //   response.status(201).send(`User added with ID: ${result.insertId}`)
+  // })
 }
 
 const updateUser = (request, response) => {
