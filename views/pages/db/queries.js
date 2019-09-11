@@ -27,18 +27,31 @@ const getUserById = (request, response) => {
 
 //idforvendor | adsid | devicename | osname | osversion | appversion | appversionnumber | action | actiontype | actionvalue | collectiondate
 const createUser = (request, response) => {
-  const { idforvendor, adsid } = request.body
+  const { idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, action, actiontype, actionvalue } = request.body
   console.log('body is ',request.body);
   console.log('idforvendor is ', idforvendor);
   console.log('adsid is ', adsid);
+  console.log('devicename is ', devicename);
+  console.log('osname is ', osname);
+  console.log('osversion is ', osversion);
+  console.log('appversion is ', appversion);
+  console.log('appversionnumber is ', appversionnumber);
+  console.log('action is ', action);
+  console.log('actiontype is ', actiontype);
+  console.log('actionvalue is ', actionvalue);
+
+  timestamp = new Date()
+  console.log('timestamp is ', timestamp);
+
   // response.json({requestBody: request.body})
   // status(201).send(`User added with ID: ${request.body}`)
 
-  pool.query('INSERT INTO user_info (idforvendor, adsid) VALUES ($1, $2)', [idforvendor, adsid], (error, results) => {
+  pool.query('INSERT INTO user_info (idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, action, actiontype, actionvalue, collectiondate) VALUES ($1, $2)', [idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, action, actiontype, actionvalue, timestamp], (error, results) => {
     if (error) {
       throw error
     }
-    response.status(201).send(`User added with ID: ${results.insertId}`)
+    response.json({Result: results})
+    // response.status(201).send(`User added with ID: ${results.insertId}`)
   })
 }
 
