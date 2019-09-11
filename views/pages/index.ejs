@@ -1022,22 +1022,22 @@ if (dlid) {
   }
 
   // make a 'synchronous' analytics request after our window vars load
-  $(function() {
-    setTimeout(function() {
-      var xurl = window._app_domain + "/api/app/" + window._app_identifier + "/download";
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', xurl);
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.onload = function () {
-        // var userInfo = JSON.parse(xhr.responseText);
-        window.location.replace(url);
-      };
-      xhr.send(JSON.stringify({
-        appIdentifier: window._app_identifier,
-        platform: platform,
-      }));
-    }, 1000);
-  });
+  // $(function() {
+  //   setTimeout(function() {
+  //     var xurl = window._app_domain + "/api/app/" + window._app_identifier + "/download";
+  //     var xhr = new XMLHttpRequest();
+  //     xhr.open('POST', xurl);
+  //     xhr.setRequestHeader('Content-Type', 'application/json');
+  //     xhr.onload = function () {
+  //       // var userInfo = JSON.parse(xhr.responseText);
+  //       window.location.replace(url);
+  //     };
+  //     xhr.send(JSON.stringify({
+  //       appIdentifier: window._app_identifier,
+  //       platform: platform,
+  //     }));
+  //   }, 1000);
+  // });
 
 } else {
   // refresh on page load.
