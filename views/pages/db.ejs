@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <% include ../partials/header.ejs %>
 </head>
-
 <body>
-
-<% include ../partials/nav.ejs %>
-
 <div class="container">
 <h2>Database Results</h2>
 
@@ -15,13 +10,15 @@
 	<li><b>Number of users: </b>
 		<%= eventCountByUsers.length%>
 	</li>
+	</ul>
 	<br>
 	<br>
-    <% eventCountByUsers.forEach(function(r) { %>
-        <li><%= r.idforvendor %> - <%= r.count %></li>
-    <% }); %>
-</ul>
-
+	<table>
+		<tr><td>User's ID for Vendor</td><td>Times of appear</td></tr>
+		<% eventCountByUsers.forEach(function(r) { %>
+        	<tr><td><%= r.idforvendor %> </td><td> <%= r.count %></td></tr>
+    	<% }); %>
+	</table>
 </div>
 
 </body>
