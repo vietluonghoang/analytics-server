@@ -83,18 +83,18 @@ const createUser = (request, response) => {
     response.status(200).send('{"status":"Fail"}')
   }else{
     pool.query('INSERT INTO user_info (idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, action, actiontype, actionvalue, collectiondate) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)', [idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, action, actiontype, actionvalue, timestamp], (error, results) => {
-    if (error) {
-      throw error
-    }
-    if (results.rowCount == 1) {
-      response.status(200).send('{"status":"Success"}')
-    } else {
-      response.status(200).send('{"status":"Fail"}')
-    }
+      if (error) {
+        throw error
+      }
+      if (results.rowCount == 1) {
+        response.status(200).send('{"status":"Success"}')
+      } else {
+        response.status(200).send('{"status":"Fail"}')
+      }
+      // response.json({Result: results})
+      // response.status(201).send(`User added with ID: ${results.insertId}`)
+    })
   }
-    // response.json({Result: results})
-    // response.status(201).send(`User added with ID: ${results.insertId}`)
-  })
 }
 
 const updateUser = (request, response) => {
