@@ -46,11 +46,53 @@ const createUser = (request, response) => {
   // response.json({requestBody: request.body})
   // status(201).send(`User added with ID: ${request.body}`)
 
-  pool.query('INSERT INTO user_info (idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, action, actiontype, actionvalue, collectiondate) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)', [idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, action, actiontype, actionvalue, timestamp], (error, results) => {
+  valid = true 
+
+  if (idforvendor == undefined) {
+    valid = false
+  }
+  if (adsid == undefined) {
+    valid = false
+  }
+  if (devicename == undefined) {
+    valid = false
+  }
+  if (osname == undefined) {
+    valid = false
+  }
+  if (osversion == undefined) {
+    valid = false
+  }
+  if (appversion == undefined) {
+    valid = false
+  }
+  if (appversionnumber == undefined) {
+    valid = false
+  }
+  if (action == undefined) {
+    valid = false
+  }
+  if (actiontype == undefined) {
+    valid = false
+  }
+  if (actionvalue == undefined) {
+    valid = false
+  }
+
+  if (!valid) {
+    response.status(200).send('{"status":"Fail"}')
+  }else{
+    pool.query('INSERT INTO user_info (idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, action, actiontype, actionvalue, collectiondate) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)', [idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, action, actiontype, actionvalue, timestamp], (error, results) => {
     if (error) {
       throw error
     }
-    response.json({Result: results})
+    if (results.rowCount == 1) {
+      response.status(200).send('{"status":"Success"}')
+    } else {
+      response.status(200).send('{"status":"Fail"}')
+    }
+  }
+    // response.json({Result: results})
     // response.status(201).send(`User added with ID: ${results.insertId}`)
   })
 }
