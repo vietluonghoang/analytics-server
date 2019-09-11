@@ -11,7 +11,7 @@ const viewAnalytics = async (request, response) => {
       console.log('raw result is ',result);
       const countPerUser = await pool.query('select idforvendor, count(idforvendor) from user_info group by idforvendor');
       
-      const results = { 'results': {allEvents: (result) ? result.rows : null}, {eventCountByUsers: (countPerUser) ? countPerUser.rows : null};
+      const results = {eventCountByUsers: (countPerUser) ? countPerUser.rows : null};
       console.log('manipulated result is ',results);
       response.render('pages/db', results );
     } catch (err) {
