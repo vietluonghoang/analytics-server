@@ -29,6 +29,8 @@ const getUserById = (request, response) => {
 const createUser = (request, response) => {
   const { idforvendor, adsid } = request.body
   console.log('body is ',request.body);
+  console.log('idforvendor is ', idforvendor);
+  console.log('adsid is ', adsid);
   // response.json({requestBody: request.body})
   // status(201).send(`User added with ID: ${request.body}`)
 
