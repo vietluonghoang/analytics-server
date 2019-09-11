@@ -33,13 +33,16 @@ app.use(
 // app.get('/', (request, response) => {
 //   response.json({ info: 'Node.js, Express, and Postgres API' })
 // })
+// app.get('/users/:id', db.getUserById)
+// app.put('/users/:id', db.updateUser)
+// app.delete('/users/:id', db.deleteUser)
 
-app.get('/', (req, res) => res.render('pages/index'))
+app.use(express.static(path.join(__dirname, 'public')))
+  .set('views', path.join(__dirname, 'views'))
+  .set('view engine', 'ejs')
+  .get('/', (req, res) => res.render('pages/index'))
 app.get('/users', db.getUsers)
-app.get('/users/:id', db.getUserById)
 app.post('/users', db.createUser)
-app.put('/users/:id', db.updateUser)
-app.delete('/users/:id', db.deleteUser)
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}.`)
