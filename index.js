@@ -3,7 +3,7 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const app = express()
 const PORT = process.env.PORT || 5000
-const db = require('./pages/db/queries')
+const db = require('/pages/db/queries')
 
 app.use(bodyParser.json())
 app.use(
