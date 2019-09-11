@@ -129,9 +129,9 @@ const deleteUser = (request, response) => {
 }
 
 module.exports = {
-  getUsers,
+  viewAnalytics,
+  addAnalytics,
   getUserById,
-  createUser,
   updateUser,
   deleteUser,
 }
