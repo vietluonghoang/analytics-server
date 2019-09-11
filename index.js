@@ -41,8 +41,8 @@ app.use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
-app.get('/users', db.getUsers)
-app.post('/users', db.createUser)
+app.get('/analytics/view', db.viewAnalytics)
+app.post('/analytics', db.addAnalytics)
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}.`)

@@ -5,7 +5,7 @@ const pool = new Pool({
 });
 
 
-const getUsers = (request, response) => {
+const viewAnalytics = (request, response) => {
   pool.query('SELECT * FROM user_info ORDER BY idforvendor, adsid', (error, results) => {
     if (error) {
       throw error
@@ -26,7 +26,7 @@ const getUserById = (request, response) => {
 }
 
 //idforvendor | adsid | devicename | osname | osversion | appversion | appversionnumber | action | actiontype | actionvalue | collectiondate
-const createUser = (request, response) => {
+const addAnalytics = (request, response) => {
   const { idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, action, actiontype, actionvalue } = request.body
   console.log('body is ',request.body);
   console.log('idforvendor is ', idforvendor);
