@@ -28,7 +28,7 @@ const getUserById = (request, response) => {
 //idforvendor | adsid | devicename | osname | osversion | appversion | appversionnumber | action | actiontype | actionvalue | collectiondate
 const createUser = (request, response) => {
   const { idforvendor, adsid } = request.body
-
+  console.log('body is ',request.body);
   response.json({requestBody: request.body})
   // status(201).send(`User added with ID: ${request.body}`)
 
