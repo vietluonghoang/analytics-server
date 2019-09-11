@@ -6,12 +6,16 @@ const pool = new Pool({
 
 
 const viewAnalytics = (request, response) => {
-  pool.query('SELECT * FROM user_info ORDER BY idforvendor, adsid', (error, results) => {
-    if (error) {
-      throw error
+  try {
+      const client = await pool.connect()
+      const result = await client.query('SELECT * FROM user_info ORDER BY idforvendor, adsid');
+      const results = { 'results': (result) ? result.rows : null};
+      res.render('pages/db', results );
+      client.release();
+    } catch (err) {
+      console.error(err);
+      res.send("Error " + err);
     }
-    response.status(200).json(results.rows)
-  })
 }
 
 const getUserById = (request, response) => {
