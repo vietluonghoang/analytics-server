@@ -13,7 +13,9 @@
 
 <ul>
     <% results.forEach(function(r) { %>
-        <li><%= r.idforvendor %> - <%= r.adsid %></li>
+    	<% results.forEach(function(e) { %>
+        	<li><%= e[0] %> - <%= e[1] %></li>
+    	<% }); %>
     <% }); %>
 </ul>
 
