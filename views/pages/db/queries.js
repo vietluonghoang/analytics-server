@@ -7,11 +7,9 @@ const pool = new Pool({
 
 const viewAnalytics = (request, response) => {
   try {
-      const client = pool.connect()
-      const result = client.query('SELECT * FROM user_info ORDER BY idforvendor, adsid');
+      const result = pool.query('SELECT * FROM user_info ORDER BY idforvendor, adsid');
       const results = { 'results': (result) ? result.rows : null};
       res.render('pages/db', results );
-      client.release();
     } catch (err) {
       console.error(err);
       res.send("Error " + err);
