@@ -29,7 +29,8 @@ const getUserById = (request, response) => {
 const createUser = (request, response) => {
   const { idforvendor, adsid } = request.body
 
-  response.status(201).send(`User added with ID: ${request.body}`)
+  response.json({requestBody: request.body})
+  // status(201).send(`User added with ID: ${request.body}`)
 
   // pool.query('INSERT INTO user_info (idforvendor, adsid) VALUES ($1, $2)', [idforvendor, adsid], (error, results) => {
   //   if (error) {
