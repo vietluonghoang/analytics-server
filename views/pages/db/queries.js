@@ -25,10 +25,11 @@ const getUserById = (request, response) => {
   })
 }
 
+//idforvendor | adsid | devicename | osname | osversion | appversion | appversionnumber | action | actiontype | actionvalue | collectiondate
 const createUser = (request, response) => {
-  const { name, email } = request.body
+  const { idforvendor, adsid } = request.body
 
-  pool.query('INSERT INTO users (name, email) VALUES ($1, $2)', [name, email], (error, results) => {
+  pool.query('INSERT INTO user_info (idforvendor, adsid) VALUES ($1, $2)', [idforvendor, adsid], (error, results) => {
     if (error) {
       throw error
     }

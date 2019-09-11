@@ -30,10 +30,11 @@ app.use(
 //   })
 //   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
-app.get('/', (request, response) => {
-  response.json({ info: 'Node.js, Express, and Postgres API' })
-})
+// app.get('/', (request, response) => {
+//   response.json({ info: 'Node.js, Express, and Postgres API' })
+// })
 
+app.get('/', (req, res) => res.render('pages/index'))
 app.get('/users', db.getUsers)
 app.get('/users/:id', db.getUserById)
 app.post('/users', db.createUser)
