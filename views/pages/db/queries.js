@@ -24,7 +24,7 @@ const getAppConfig = (request, response) => {
   const id = parseInt(request.params.id)
 
   if (id != undefined) {
-    pool.query('SELECT * FROM app_config',id], (error, results) => {
+    pool.query('SELECT * FROM app_config', (error, results) => {
     if (error) {
       throw error
     }
