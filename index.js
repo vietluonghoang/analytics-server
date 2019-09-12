@@ -46,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')))
   .set('view engine', 'ejs')
   .get('/analytics/view', db.viewAnalytics)
 app.post('/analytics', db.addAnalytics)
+app.get('/getConfig',db.getAppConfig)
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}.`)

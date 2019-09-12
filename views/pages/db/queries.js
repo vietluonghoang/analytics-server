@@ -20,15 +20,25 @@ const viewAnalytics = async (request, response) => {
     }
 }
 
-const getUserById = (request, response) => {
+const getAppConfig = (request, response) => {
   const id = parseInt(request.params.id)
 
-  pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
+  if (id != undefined) {
+    pool.query('SELECT * FROM app_config',id], (error, results) => {
     if (error) {
       throw error
     }
     response.status(200).json(results.rows)
   })
+  }else{
+    pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+  }
+  
 }
 
 //idforvendor | adsid | devicename | osname | osversion | appversion | appversionnumber | action | actiontype | actionvalue | collectiondate
@@ -133,7 +143,7 @@ const deleteUser = (request, response) => {
 module.exports = {
   viewAnalytics,
   addAnalytics,
-  getUserById,
+  getAppConfig,
   updateUser,
   deleteUser,
 }
