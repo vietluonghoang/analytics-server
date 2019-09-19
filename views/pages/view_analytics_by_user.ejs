@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<center>
+<div class="container">
+<h2>Database Results</h2>
+
+<ul>
+	<li><b>Number of action: </b>
+		<%= userDetails.length%>
+	</li>
+	</ul>
+	<br>
+	<br>
+	<table border="1" cellpadding="5">
+		<tr><td align="center">User's ID for Vendor</td><td align="center">Times of appear</td></tr>
+		<% userDetails.forEach(function(r) { %>
+        	<tr><td align="center"><%= r.idforvendor %> </td><td align="center"><%= r.adsid %> </td><td align="center"><%= r.devicename %> </td><td align="center"><%= r.osname %> </td><td align="center"><%= r.osversion %> </td><td align="center"><%= r.appversion %> </td><td align="center"><%= r.appversionnumber %> </td><td align="center"><%= r.action %> </td><td align="center"><%= r.actiontype %> </td><td align="center"><%= r.actionvalue %> </td><td align="center"><%= r.collectiondate %> </td></tr>
+    	<% }); %>
+	</table>
+</div>
+</center>
+</body>
+</html>

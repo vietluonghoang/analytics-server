@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<center>
+<div class="container">
+<h2>Database Results</h2>
+
+<ul>
+	<li><b>Number of users: </b>
+		<%= eventCountByUsers.length%>
+	</li>
+	</ul>
+	<br>
+	<br>
+	<table border="1" cellpadding="5">
+		<tr><td align="center">User's ID for Vendor</td><td align="center">Times of appear</td><td align="center"></td></tr>
+		<% eventCountByUsers.forEach(function(r) { %>
+        	<tr><td><%= r.idforvendor %> </td><td align="center"> <%= r.timesOfAction %></td><td align="center"> <a href="https://wethoong-server.herokuapp.com/analytics/view/<%= r.idforvendor %>">View details</a></td></tr>
+    	<% }); %>
+	</table>
+</div>
+</center>
+</body>
+</html>
