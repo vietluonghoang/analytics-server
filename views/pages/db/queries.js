@@ -16,7 +16,7 @@ const viewAnalytics = async (request, response) => {
       
       const results = {eventCountByUsers: (countPerUser) ? countPerUser.rows : null};
       // console.log('manipulated result is ',results);
-      response.render('pages/view_analytics', results );
+      response.render('pages/db', results );
     } catch (err) {
       console.error(err);
       response.send("Error " + err);
