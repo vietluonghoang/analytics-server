@@ -8,7 +8,7 @@ const pool = new Pool({
 const viewAnalytics = async (request, response) => {
   const id = request.params.id
   console.error("=+=+=ID: " + id);
-  if (id != undefined) {
+  if (id == undefined) {
     try {
       // const result = await pool.query('SELECT * FROM user_info ORDER BY idforvendor, adsid');
       // console.log('raw result is ',result);
