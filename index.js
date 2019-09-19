@@ -37,15 +37,22 @@ app.use(
 // app.put('/users/:id', db.updateUser)
 // app.delete('/users/:id', db.deleteUser)
 
+// view home page
 app.use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
+
+//view analytics page
 app.use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/analytics/view', db.viewAnalytics)
+
+//log analytics enpoint
 app.post('/analytics', db.addAnalytics)
+
+//get app configuration enpoint
 app.get('/getConfig',db.getAppConfig)
 
 app.listen(PORT, () => {

@@ -6,18 +6,30 @@ const pool = new Pool({
 
 
 const viewAnalytics = async (request, response) => {
-  try {
+  const id = request.params.id
+  if (id != undefined) {
+    try {
       // const result = await pool.query('SELECT * FROM user_info ORDER BY idforvendor, adsid');
       // console.log('raw result is ',result);
-      const countPerUser = await pool.query('select idforvendor, count(idforvendor) from user_info group by idforvendor');
+      const countPerUser = await pool.query('select idforvendor, count(idforvendor) as timesOfAction from user_info group by idforvendor order by timesOfAction desc');
       
       const results = {eventCountByUsers: (countPerUser) ? countPerUser.rows : null};
       // console.log('manipulated result is ',results);
-      response.render('pages/db', results );
+      response.render('pages/view_analytics', results );
     } catch (err) {
       console.error(err);
       response.send("Error " + err);
     }
+  }else{
+    try{
+      const actionDetailsByUser = await pool.query('SELECT * FROM user_info WHERE idforvendor = $1 order by collectiondate desc', [id])
+      const results = {userDetails: (actionDetailsByUser) ? actionDetailsByUser.rows : null};
+      response.render('pages/view_analytics_by_user', results );
+    }catch (err){
+      console.error(err);
+      response.send("Error " + err);
+    }
+  }
 }
 
 const getAppConfig = (request, response) => {
@@ -25,18 +37,18 @@ const getAppConfig = (request, response) => {
 
   if (id != undefined) {
     pool.query('SELECT * FROM app_config', (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(200).json(results.rows)
-  })
+      if (error) {
+        throw error
+      }
+      response.status(200).json(results.rows)
+    })
   }else{
     pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(200).json(results.rows)
-  })
+      if (error) {
+        throw error
+      }
+      response.status(200).json(results.rows)
+    })
   }
   
 }
@@ -126,7 +138,7 @@ const updateUser = (request, response) => {
       }
       response.status(200).send(`User modified with ID: ${id}`)
     }
-  )
+    )
 }
 
 const deleteUser = (request, response) => {
