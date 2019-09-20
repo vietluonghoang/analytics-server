@@ -12,7 +12,7 @@ const viewAnalytics = async (request, response) => {
     try {
       // const result = await pool.query('SELECT * FROM user_info ORDER BY idforvendor, adsid');
       // console.log('raw result is ',result);
-      const countPerUser = await pool.query('select idforvendor, count(idforvendor) as timesOfAction from user_info group by idforvendor order by timesOfAction desc');
+      const countPerUser = await pool.query('select adsid, count(adsid) as timesOfAction from user_info group by adsid order by timesOfAction desc');
       
       const results = {eventCountByUsers: (countPerUser) ? countPerUser.rows : null};
       // console.log('manipulated result is ',results);
@@ -23,7 +23,7 @@ const viewAnalytics = async (request, response) => {
     }
   }else{
     try{
-      const actionDetailsByUser = await pool.query('SELECT * FROM user_info WHERE idforvendor = $1 order by collectiondate desc', [id])
+      const actionDetailsByUser = await pool.query('SELECT * FROM user_info WHERE adsid = $1 order by collectiondate desc', [id])
       const results = {userDetails: (actionDetailsByUser) ? actionDetailsByUser.rows : null};
       response.render('pages/view_analytics_by_user', results );
     }catch (err){

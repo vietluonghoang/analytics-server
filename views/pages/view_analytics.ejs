@@ -15,9 +15,9 @@
 	<br>
 	<br>
 	<table border="1" cellpadding="5">
-		<tr><td align="center">User's ID for Vendor</td><td align="center">Times of appear</td><td align="center"></td></tr>
+		<tr><td align="center">Ads Id</td><td align="center">Times of appear</td><td align="center"></td></tr>
 		<% eventCountByUsers.forEach(function(r) { %>
-        	<tr><td><%= r.idforvendor %> </td><td align="center"> <%= r.timesofaction %></td><td align="center"> <a href="https://wethoong-server.herokuapp.com/analytics/view/<%= r.idforvendor %>">View details</a></td></tr>
+        	<tr><td><%= r.adsid %> </td><td align="center"> <%= r.timesofaction %></td><td align="center"> <a href="https://wethoong-server.herokuapp.com/analytics/view/<%= r.adsid %>">View details</a></td></tr>
     	<% }); %>
 	</table>
 </div>
