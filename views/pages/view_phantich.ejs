@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<center>
+<div class="container">
+<h2>Database Results</h2>
+
+<ul>
+	<li><b>Number of users: </b>
+		<%= eventCountByUsers.length%>
+	</li>
+	</ul>
+	<br>
+	<br>
+	<table border="1" cellpadding="5">
+	p.,p.,p.,p.,p.,p.,d.,d.,d.,d.
+		<tr>
+			<td align="center">Id Key</td>
+			<td align="center">Author</td>
+			<td align="center">Title</td>
+			<td align="center">Short Description</td>
+			<td align="center">Source</td>
+			<td align="center">Revision</td>
+			<td align="center">Content Order</td>
+			<td align="center">Content</td>
+			<td align="center">Minhhoa</td>
+			<td align="center">Minhhoa Type</td>
+			<td></td>
+		</tr>
+		<% eventCountByUsers.forEach(function(r) { %>
+        	<tr><td align="center"> <%= r.id_key %> </td>
+        		<td align="center"> <%= r.author %></td>
+        		<td align="center"> <%= r.title %></td>
+        		<td align="center"> <%= r.shortdescription %></td>
+        		<td align="center"> <a href="<%= r.source %>">View details</a></td>
+        		<td align="center"> <%= r.revision %></td>
+        		<td align="center"> <%= r.contentorder %></td>
+        		<td align="center"> <%= r.content %></td>
+        		<td align="center"> <%= r.minhhoa %></td>
+        		<td align="center"> <%= r.minhhoatype %></td>
+        		<td align="center"> <img src="<%= r.minhhoa %>" /></td>
+        	</tr>
+    	<% }); %>
+	</table>
+</div>
+</center>
+</body>
+</html>
