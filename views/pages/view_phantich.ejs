@@ -29,7 +29,7 @@
 			<td></td>
 		</tr>
 		<% phantich.forEach(function(r) { %>
-        	<tr><td align="center"> <%= r.id_key %> </td>
+        	<tr><td align="center"> <a href="https://wethoong-server.herokuapp.com/phantich/view/<%= r.id_key %>"><%= r.id_key %></a> </td>
         		<td align="center"> <%= r.author %></td>
         		<td align="center"> <%= r.title %></td>
         		<td align="center"> <%= r.shortdescription %></td>
@@ -44,6 +44,7 @@
     	<% }); %>
 	</table>
 </div>
+<a href = "https://wethoong-server.herokuapp.com/phantich/view/"> View all Phantich </a>
 </center>
 </body>
 </html>

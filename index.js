@@ -64,6 +64,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 .set('views', path.join(__dirname, 'views'))
 .set('view engine', 'ejs')
 .get('/phantich/view', db.viewPhantich)
+app.use(express.static(path.join(__dirname, 'public')))
+.set('views', path.join(__dirname, 'views'))
+.set('view engine', 'ejs')
+.get('/phantich/view/:id', db.viewPhantich)
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}.`)
