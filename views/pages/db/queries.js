@@ -33,6 +33,34 @@ const viewAnalytics = async (request, response) => {
   }
 }
 
+const viewPhantich = async (request, response) => {
+  const id = request.params.id
+  if (id == undefined) {
+    try {
+      // const result = await pool.query('SELECT * FROM user_info ORDER BY idforvendor, adsid');
+      // console.log('raw result is ',result);
+      const allPhantich = await pool.query('select p.id_key,p.author,p.title,p.shortdescription,p.source,p.revision,d.contentorder,d.content,d.minhhoa,d.minhhoatype from phantich as p join phantich_details as d on p.id_key = d.id_key order by p.id_key');
+      
+      const results = {phantich: (allPhantich) ? allPhantich.rows : null};
+      // console.log('manipulated result is ',results);
+      response.render('pages/view_phantich', results );
+    } catch (err) {
+      console.error(err);
+      response.send("Error " + err);
+    }
+  }else{
+    try{
+      const actionDetailsByUser = await pool.query('SELECT * FROM user_info WHERE adsid = $1 order by collectiondate desc', [id])
+      const results = {userDetails: (actionDetailsByUser) ? actionDetailsByUser.rows : null};
+      response.render('pages/view_analytics_by_user', results );
+    }catch (err){
+      console.error(err);
+      response.send("Error " + err);
+    }
+  }
+}
+
+
 const getAppConfig = (request, response) => {
   const id = parseInt(request.params.id)
 
@@ -157,6 +185,7 @@ module.exports = {
   viewAnalytics,
   addAnalytics,
   getAppConfig,
+  viewPhantich,
   updateUser,
   deleteUser,
 }

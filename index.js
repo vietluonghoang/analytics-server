@@ -10,7 +10,7 @@ app.use(
   bodyParser.urlencoded({
     extended: true,
   })
-)
+  )
 // app
 //   .use(express.static(path.join(__dirname, 'public')))
 //   .set('views', path.join(__dirname, 'views'))
@@ -39,25 +39,31 @@ app.use(
 
 // view home page
 app.use(express.static(path.join(__dirname, 'public')))
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
+.set('views', path.join(__dirname, 'views'))
+.set('view engine', 'ejs')
+.get('/', (req, res) => res.render('pages/index'))
 
 //view analytics page
 app.use(express.static(path.join(__dirname, 'public')))
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
-  .get('/analytics/view', db.viewAnalytics)
-  app.use(express.static(path.join(__dirname, 'public')))
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
-  .get('/analytics/view/:id', db.viewAnalytics)
+.set('views', path.join(__dirname, 'views'))
+.set('view engine', 'ejs')
+.get('/analytics/view', db.viewAnalytics)
+app.use(express.static(path.join(__dirname, 'public')))
+.set('views', path.join(__dirname, 'views'))
+.set('view engine', 'ejs')
+.get('/analytics/view/:id', db.viewAnalytics)
 
 //log analytics enpoint
 app.post('/analytics', db.addAnalytics)
 
 //get app configuration enpoint
 app.get('/getConfig',db.getAppConfig)
+
+//view Phantich page
+app.use(express.static(path.join(__dirname, 'public')))
+.set('views', path.join(__dirname, 'views'))
+.set('view engine', 'ejs')
+.get('/phantich/view', db.viewPhantich)
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}.`)
