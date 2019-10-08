@@ -68,11 +68,17 @@ const getPhantich = async (request, response) => {
     try {
       // const result = await pool.query('SELECT * FROM user_info ORDER BY idforvendor, adsid');
       // console.log('raw result is ',result);
-      const allPhantich = await pool.query('select p.id_key,p.author,p.title,p.shortdescription,p.source,p.revision,d.contentorder,d.content,d.minhhoa,d.minhhoatype from phantich as p join phantich_details as d on p.id_key = d.id_key order by p.id_key, d.contentorder');
+      // const allPhantich = await pool.query('select p.id_key,p.author,p.title,p.shortdescription,p.source,p.revision,d.contentorder,d.content,d.minhhoa,d.minhhoatype from phantich as p join phantich_details as d on p.id_key = d.id_key order by p.id_key, d.contentorder');
       
-      const results = {phantich: (allPhantich) ? allPhantich.rows : null};
-      // console.log('manipulated result is ',results);
+      // const results = {phantich: (allPhantich) ? allPhantich.rows : null};
+      // // console.log('manipulated result is ',results);
+      // response.status(200).json(results.rows)
+      pool.query('select p.id_key,p.author,p.title,p.shortdescription,p.source,p.revision,d.contentorder,d.content,d.minhhoa,d.minhhoatype from phantich as p join phantich_details as d on p.id_key = d.id_key order by p.id_key, d.contentorder', (error, results) => {
+      if (error) {
+        throw error
+      }
       response.status(200).json(results.rows)
+    })
     } catch (err) {
       console.error(err);
       response.send("Error " + err);
