@@ -231,9 +231,9 @@ const redeemAdsOptoutCoupon = (request, response) => {
       }
       //if result is 1 then there is still available coupon (0 is not)
       console.log('check available coupon result: ', results);
-      console.log('check available coupon result isValid: ', results.cnt);
+      console.log('check available coupon result cnt: ', results.cnt);
       console.log('check available coupon result rowCount: ', results.rowCount);
-      if (results.[0].cnt == 1) {
+      if (results.cnt == 1) {
         //check if the user has already redeemed this coupon code
         pool.query('select ads_id from ads_optout where ads_id = $1 and device_name = $2 and coupon_code = $3', [adsidLowercase, devicenameLowercase, couponCodeLowercase], (error, results) => {
           if (error) {
