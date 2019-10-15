@@ -72,6 +72,12 @@ app.use(express.static(path.join(__dirname, 'public')))
 //get phantich enpoint
 app.get('/phantich/getPhantich',db.getPhantich)
 
+//redeemcoupon enpoint
+app.post('/redeemcoupon', db.redeemAdsOptoutCoupon)
+
+//get check Ads-optout enpoint
+app.get('/hasoptout',db.hasOptoutAds)
+
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}.`)
 })

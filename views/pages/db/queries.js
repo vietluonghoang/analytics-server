@@ -74,11 +74,11 @@ const getPhantich = async (request, response) => {
       // // console.log('manipulated result is ',results);
       // response.status(200).json(results.rows)
       pool.query('select p.id_key,p.author,p.title,p.shortdescription,p.source,p.revision,d.contentorder,d.content,d.minhhoa,d.minhhoatype from phantich as p join phantich_details as d on p.id_key = d.id_key order by p.id_key, d.contentorder', (error, results) => {
-      if (error) {
-        throw error
-      }
-      response.status(200).json(results.rows)
-    })
+        if (error) {
+          throw error
+        }
+        response.status(200).json(results.rows)
+      })
     } catch (err) {
       console.error(err);
       response.send("Error " + err);
@@ -88,7 +88,7 @@ const getPhantich = async (request, response) => {
 
     // try{
     //   const allPhantich = await pool.query('select p.id_key,p.author,p.title,p.shortdescription,p.source,p.revision,d.contentorder,d.content,d.minhhoa,d.minhhoatype from phantich as p join phantich_details as d on p.id_key = d.id_key WHERE p.id_key = $1 order by p.id_key, d.contentorder', [id]);
-      
+
     //   const results = {phantich: (allPhantich) ? allPhantich.rows : null};
     //   // console.log('manipulated result is ',results);
     //   response.render('pages/view_phantich', results );
@@ -192,6 +192,119 @@ const addAnalytics = (request, response) => {
   }
 }
 
+const redeemAdsOptoutCoupon = (request, response) => {
+  const {adsid, devicename, couponCode} = request.body
+  console.log('body is ',request.body);
+  console.log('adsid is ', adsid);
+  console.log('devicename is ', devicename);
+  console.log('couponCode is ', couponCode);
+
+  timestamp = new Date()
+  console.log('timestamp is ', timestamp);
+
+  // response.json({requestBody: request.body})
+  // status(201).send(`User added with ID: ${request.body}`)
+
+  valid = true 
+
+  if (adsid == undefined) {
+    valid = false
+  }
+  if (devicename == undefined) {
+    valid = false
+  } 
+  if (couponCode == undefined) {
+    valid = false
+  }
+
+  if (!valid) {
+    response.status(200).send('{"status":"Fail"}')
+  }else{
+    adsidLowercase = adsid.toLowerCase()
+    devicenameLowercase = devicename.toLowerCase()
+    couponCodeLowercase = couponCode.toLowerCase()
+
+    //check if the coupon code has not expired and still available
+    pool.query('select case when count(c.coupon_code) < c.quantity then 1 else 0 end from coupons as c join ads_optout as a on c.coupon_code = a.last_redeemed_code where c.coupon_code = $1 and c.start_time >= $2 and c.end_time <= $2 group by c.coupon_code,c.quantity', [couponCodeLowercase, timestamp], (error, results) => {
+      if (error) {
+        throw error
+      }
+      //if result is 1 then there is still available coupon (0 is not)
+      if (results[0].case == 1) {
+        //check if the user has already redeemed this coupon code
+        pool.query('select ads_id from ads_optout where ads_id = $1 and device_name = $2 and coupon_code = $3', [adsidLowercase, devicenameLowercase, couponCodeLowercase], (error, results) => {
+          if (error) {
+            throw error
+          }
+        //if the user has already redeemed the coupon, just update the expired_time as set in coupons table accordingly
+        if(results.rowCount >= 1){
+          pool.query('update ads_optout set expired_time = (select valid_until from coupons where coupon_code = $3) where ads_id = $1 and device_name = $2 and coupon_code = $3', [adsidLowercase, devicenameLowercase, couponCodeLowercase], (error, results) => {
+            if (error) {
+              throw error
+            }
+            response.status(200).send('{"status":"Success"}')
+          })
+        }else{
+          //if the user has not redeemed the coupon, add a record for the coupon
+          pool.query('insert into ads_optout(ads_id,device_name,last_redeemed_code,expired_time,redeemed_time) values ($1,$2,$3,(select valid_until from coupons where coupon_code = $3),$4)', [adsidLowercase, devicenameLowercase, couponCodeLowercase,timestamp], (error, results) => {
+            if (error) {
+              throw error
+            }
+            response.status(200).send('{"status":"Success"}')
+          })
+        }
+      })
+        response.status(200).send('{"status":"Success"}')
+      } else {
+        response.status(200).send('{"status":"Fail"}')
+      }
+      // response.json({Result: results})
+      // response.status(201).send(`User added with ID: ${results.insertId}`)
+    })
+  }
+}
+
+const hasOptoutAds = (request, response) => {
+  const {adsid, devicename} = request.body
+  console.log('body is ',request.body);
+  console.log('adsid is ', adsid);
+  console.log('devicename is ', devicename);
+
+  timestamp = new Date()
+  console.log('timestamp is ', timestamp);
+
+  // response.json({requestBody: request.body})
+  // status(201).send(`User added with ID: ${request.body}`)
+
+  valid = true 
+
+  if (adsid == undefined) {
+    valid = false
+  }
+  if (devicename == undefined) {
+    valid = false
+  } 
+
+  if (!valid) {
+    response.status(200).send('{"status":"Fail"}')
+  }else{
+    adsidLowercase = adsid.toLowerCase()
+    devicenameLowercase = devicename.toLowerCase()
+
+    pool.query('select expired_time from ads_optout where ads_id = $1 and device_name = $2 and expired_time > $3', [adsidLowercase, devicenameLowercase, timestamp], (error, results) => {
+      if (error) {
+        throw error
+      }
+      if(results.rowCount >= 1){
+        response.status(200).send('{"status":"Success"}')
+      }else{
+
+        response.status(200).send('{"status":"Fail"}')
+      }
+    })
+  }
+}
+
 const updateUser = (request, response) => {
   const id = parseInt(request.params.id)
   const { name, email } = request.body
@@ -225,6 +338,8 @@ module.exports = {
   getAppConfig,
   viewPhantich,
   getPhantich,
+  redeemAdsOptoutCoupon,
+  hasOptoutAds,
   updateUser,
   deleteUser,
 }
