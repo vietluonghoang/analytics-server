@@ -15,6 +15,8 @@ const viewAnalytics = async (request, response) => {
       const countPerUser = await pool.query('select adsid, count(adsid) as timesOfAction from user_info group by adsid order by timesOfAction desc');
       
       const results = {eventCountByUsers: (countPerUser) ? countPerUser.rows : null};
+      console.log('check available analytics result: ', results);
+      console.log('check available analytics result rowCount: ', results.rowCount);
       // console.log('manipulated result is ',results);
       response.render('pages/view_analytics', results );
     } catch (err) {
