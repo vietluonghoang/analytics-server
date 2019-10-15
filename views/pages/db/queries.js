@@ -15,8 +15,6 @@ const viewAnalytics = async (request, response) => {
       const countPerUser = await pool.query('select adsid, count(adsid) as timesOfAction from user_info group by adsid order by timesOfAction desc');
       
       const results = {eventCountByUsers: (countPerUser) ? countPerUser.rows : null};
-      console.log('check available analytics result: ', results);
-      console.log('check available analytics result rowCount: ', results.rowCount);
       // console.log('manipulated result is ',results);
       response.render('pages/view_analytics', results );
     } catch (err) {
@@ -26,7 +24,10 @@ const viewAnalytics = async (request, response) => {
   }else{
     try{
       const actionDetailsByUser = await pool.query('SELECT * FROM user_info WHERE adsid = $1 order by collectiondate desc', [id])
-      const results = {userDetails: (actionDetailsByUser) ? actionDetailsByUser.rows : null};
+      console.log('check available raw analytics result: ', actionDetailsByUser);
+      const results = {userDetails: (actionDetailsByUser) ? actionDetailsByUser.rows : null};  
+      console.log('check available analytics result: ', results);
+      console.log('check available analytics result rowCount: ', results.rowCount);
       response.render('pages/view_analytics_by_user', results );
     }catch (err){
       console.error(err);
