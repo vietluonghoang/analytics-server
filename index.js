@@ -76,7 +76,7 @@ app.get('/phantich/getPhantich',db.getPhantich)
 app.post('/redeemcoupon', db.redeemAdsOptoutCoupon)
 
 //get check Ads-optout enpoint
-app.get('/hasoptout',db.hasOptoutAds)
+app.post('/hasoptout',db.hasOptoutAds)
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}.`)
