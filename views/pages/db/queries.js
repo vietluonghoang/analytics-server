@@ -244,7 +244,7 @@ const redeemAdsOptoutCoupon = (request, response) => {
       if (results.rowCount > 0) {
         if (results.rows[0].cnt == 1) {
           //check if the user has already redeemed this coupon code
-          pool.query('select ads_id from ads_optout where ads_id = $1 and device_name = $2 and coupon_code = $3', [adsidLowercase, devicenameLowercase, couponCodeLowercase], (error, results) => {
+          pool.query('select ads_id from ads_optout where ads_id = $1 and device_name = $2 and last_redeemed_code = $3', [adsidLowercase, devicenameLowercase, couponCodeLowercase], (error, results) => {
             if (error) {
               throw error
             }
@@ -269,7 +269,6 @@ const redeemAdsOptoutCoupon = (request, response) => {
               })
             }
           })
-          response.status(200).send('{"status":"Success"}')
         } else {
           response.status(200).send('{"status":"Fail"}')
         }
