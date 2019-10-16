@@ -249,7 +249,7 @@ const redeemAdsOptoutCoupon = (request, response) => {
             console.log('check available redeemed coupon: ', results.rowCount);
             if(results.rowCount >= 1){
               console.log('updating expired time of existing coupon');
-              pool.query('update ads_optout set expired_time = (select valid_until from coupons where coupon_code = $3) where ads_id = $1 and device_name = $2 and coupon_code = $3', [adsidLowercase, devicenameLowercase, couponCodeLowercase], (error, results) => {
+              pool.query('update ads_optout set expired_time = (select valid_until from coupons where coupon_code = $3) where ads_id = $1 and device_name = $2 and last_redeemed_code = $3', [adsidLowercase, devicenameLowercase, couponCodeLowercase], (error, results) => {
                 if (error) {
                   throw error
                 }
@@ -258,7 +258,6 @@ const redeemAdsOptoutCoupon = (request, response) => {
             }else{
               //if the user has not redeemed the coupon, add a record for the coupon
               console.log('insert coupon for user');
-              console.log('insert into ads_optout(ads_id,device_name,last_redeemed_code,expired_time,redeemed_time) values ($1,$2,$3,(select valid_until from coupons where coupon_code = $3),$4)');
               pool.query('insert into ads_optout(ads_id,device_name,last_redeemed_code,expired_time,redeemed_time) values ($1,$2,cast($3 as varchar),(select valid_until from coupons where coupon_code = $3),$4)', [adsidLowercase, devicenameLowercase, couponCodeLowercase,timestamp], (error, results) => {
                 if (error) {
                   throw error
