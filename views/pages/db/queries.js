@@ -234,13 +234,10 @@ const redeemAdsOptoutCoupon = (request, response) => {
       }
       //if result is 1 then there is still available coupon (0 is not)
       console.log('check available coupon result: ', results);
-      console.log('check available coupon result.cnt: ', results.cnt);
       console.log('check available coupon result.rows: ', results.rows);
       console.log('check available coupon result rowCount: ', results.rowCount);
       console.log('check available coupon result fields: ', results.fields);
-      console.log('check available coupon result fields.cnt: ', results.fields.cnt);
 
-      console.log('check available coupon result [0]: ', results[0]);
       if (results.rowCount > 0) {
         if (results.rows[0].cnt == 1) {
           //check if the user has already redeemed this coupon code
