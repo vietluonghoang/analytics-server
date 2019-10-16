@@ -238,7 +238,6 @@ const redeemAdsOptoutCoupon = (request, response) => {
       console.log('check available coupon result rowCount: ', results.rowCount);
       console.log('check available coupon result fields: ', results.fields);
       console.log('check available coupon result fields: ', results.fields.cnt);
-      console.log('check available coupon result fields: ', results.fields[cnt]);
 
       console.log('check available coupon result [0]: ', results[0]);
       if (results.cnt == 1) {
