@@ -262,7 +262,7 @@ const redeemAdsOptoutCoupon = (request, response) => {
               //if the user has not redeemed the coupon, add a record for the coupon
               console.log('insert coupon for user');
               console.log('insert into ads_optout(ads_id,device_name,last_redeemed_code,expired_time,redeemed_time) values ($1,$2,$3,(select valid_until from coupons where coupon_code = $3),$4)');
-              pool.query('insert into ads_optout(ads_id,device_name,last_redeemed_code,expired_time,redeemed_time) values ($1,$2,$3,(select valid_until from coupons where coupon_code = $3),$4)', [adsidLowercase, devicenameLowercase, couponCodeLowercase,timestamp], (error, results) => {
+              pool.query('insert into ads_optout(ads_id,device_name,last_redeemed_code,expired_time,redeemed_time) values ($1,$2,cast($3 as varchar),(select valid_until from coupons where coupon_code = $3),$4)', [adsidLowercase, devicenameLowercase, couponCodeLowercase,timestamp], (error, results) => {
                 if (error) {
                   throw error
                 }
