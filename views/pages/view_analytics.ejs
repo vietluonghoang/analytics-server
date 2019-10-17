@@ -5,7 +5,7 @@
 <body>
 <center>
 <div class="container">
-<h2>Database Results</h2>
+<h2>Analytics Results</h2>
 
 <ul>
 	<li><b>Number of users: </b>
@@ -15,9 +15,11 @@
 	<br>
 	<br>
 	<table border="1" cellpadding="5">
-		<tr><td align="center">Ads Id</td><td align="center">Times of appear</td><td align="center"></td></tr>
+		<% order = 1 %>
+		<tr><td></td><td align="center">Ads Id</td><td align="center">Times of appear</td><td align="center"></td></tr>
 		<% eventCountByUsers.forEach(function(r) { %>
-        	<tr><td><%= r.adsid %> </td><td align="center"> <%= r.timesofaction %></td><td align="center"> <a href="https://wethoong-server.herokuapp.com/analytics/view/<%= r.adsid %>">View details</a></td></tr>
+        	<tr><%= order%><td></td><td><%= r.adsid %> </td><td align="center"> <%= r.timesofaction %></td><td align="center"> <a href="https://wethoong-server.herokuapp.com/analytics/view/<%= r.adsid %>">View details</a></td></tr>
+        	<% order += 1 %>
     	<% }); %>
 	</table>
 </div>

@@ -76,7 +76,7 @@ const getPhantich = async (request, response) => {
       // const results = {phantich: (allPhantich) ? allPhantich.rows : null};
       // // console.log('manipulated result is ',results);
       // response.status(200).json(results.rows)
-      pool.query('select p.id_key,p.author,p.title,p.shortdescription,p.source,p.revision,d.contentorder,d.content,d.minhhoa,d.minhhoatype from phantich as p join phantich_details as d on p.id_key = d.id_key order by p.id_key, d.contentorder', (error, results) => {
+      pool.query('select p.id_key,p.author,p.title,p.shortdescription,p.source,p.source_inapp,p.revision,d.contentorder,d.content,d.minhhoa,d.minhhoatype from phantich as p join phantich_details as d on p.id_key = d.id_key order by p.id_key, d.contentorder', (error, results) => {
         if (error) {
           throw error
         }
