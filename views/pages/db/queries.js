@@ -228,7 +228,7 @@ const redeemAdsOptoutCoupon = (request, response) => {
     couponCodeLowercase = couponCode.toLowerCase()
 
     //check if the coupon code has not expired and still available
-    pool.query('select case when count(c.coupon_code) < c.quantity then 1 else 0 end as cnt from coupons as c join ads_optout as a on c.coupon_code = a.last_redeemed_code where c.coupon_code = $1 and c.start_time <= $2 and c.end_time >= $2 group by c.coupon_code,c.quantity', [couponCodeLowercase, timestamp], (error, results) => {
+    pool.query('select case when count(c.coupon_code) < c.quantity then 1 else 0 end as cnt from coupons as c left join ads_optout as a on c.coupon_code = a.last_redeemed_code where c.coupon_code = $1 and c.start_time <= $2 and c.end_time >= $2 group by c.coupon_code,c.quantity', [couponCodeLowercase, timestamp], (error, results) => {
       if (error) {
         throw error
       }
