@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<center>
+<div class="container">
+<h2>Analytics Results</h2>
+<table>
+	<tr>
+		<td><a href="https://wethoong-server.herokuapp.com/analytics/view/">View all</a></td>
+		<td><a href="https://wethoong-server.herokuapp.com/analytics/view/app_open/">View app_open</a></td>
+		<td><a href="https://wethoong-server.herokuapp.com/analytics/view/view_phantich/">View view_phantich</a></td>
+	</tr>
+</table>
+<ul>
+	<li><b>Number of phantich: </b>
+		<%= phantichCount.length%>
+	</li>
+	</ul>
+	<br>
+	<br>
+	<table border="1" cellpadding="5">
+		<% var order = 1 %>
+		<tr><td></td><td align="center">PhantichID</td><td align="center">Times of View</td><td align="center"></td></tr>
+		<% phantichCount.forEach(function(r) { %>
+        	<tr><td><%= order%></td><td><%= r.actionvalue %> </td><td align="center"> <%= r.timesofaction %></td><td align="center"> <a href="https://wethoong-server.herokuapp.com//analytics/view/view_phantich/<%= r.actionvalue %>">View details</a></td></tr>
+        	<% order += 1 %>
+    	<% }); %>
+	</table>
+</div>
+</center>
+</body>
+</html>
