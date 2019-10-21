@@ -77,7 +77,7 @@ const viewAnalyticsViewphantich = async (request, response) => {
       
       const results = {phantichCount: (countPerUser) ? countPerUser.rows : null};
       // console.log('manipulated result is ',results);
-      response.render('pages/view_analytics', results );
+      response.render('pages/view_analytics_viewphantich', results );
     } catch (err) {
       console.error(err);
       response.send("Error " + err);
@@ -89,7 +89,7 @@ const viewAnalyticsViewphantich = async (request, response) => {
       const results = {phantichCountByPhantich: (actionDetailsByUser) ? actionDetailsByUser.rows : null};  
       console.log('check available analytics result: ', results);
       console.log('check available analytics result rowCount: ', results.rowCount);
-      response.render('pages/view_analytics_by_user', results );
+      response.render('pages/view_analytics_viewphantich_by_phantich', results );
     }catch (err){
       console.error(err);
       response.send("Error " + err);
