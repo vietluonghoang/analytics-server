@@ -17,7 +17,7 @@ const viewAnalytics = async (request, response) => {
         timestamp = new Date()
         timestamp.setDate(timestamp.getDate() - range)
         countPerUser = await pool.query('select adsid, count(adsid) as timesOfAction from user_info where collectiondate > $1  group by adsid order by timesOfAction desc', [timestamp]);
-      } else {}
+      } else {
         countPerUser = await pool.query('select adsid, count(adsid) as timesOfAction from user_info group by adsid order by timesOfAction desc');
       }
       const results = {eventCountByUsers: (countPerUser) ? countPerUser.rows : null};
