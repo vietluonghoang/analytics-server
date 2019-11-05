@@ -12,7 +12,7 @@ const viewAnalytics = async (request, response) => {
     try {
       // const result = await pool.query('SELECT * FROM user_info ORDER BY idforvendor, adsid');
       // console.log('raw result is ',result);
-      const countPerUser = undefined
+      countPerUser = undefined
       if (range != undefined){
         timestamp = new Date()
         timestamp.setDate(timestamp.getDate() - range)
