@@ -52,6 +52,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 .set('views', path.join(__dirname, 'views'))
 .set('view engine', 'ejs')
 .get('/analytics/view/:id', db.viewAnalytics)
+app.use(express.static(path.join(__dirname, 'public')))
+.set('views', path.join(__dirname, 'views'))
+.set('view engine', 'ejs')
+.get('/analytics/view/range/:range', db.viewAnalytics)
 
 //view analytics app_open
 app.use(express.static(path.join(__dirname, 'public')))
@@ -72,7 +76,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 .set('views', path.join(__dirname, 'views'))
 .set('view engine', 'ejs')
 .get('/analytics/view_phantich/:id', db.viewAnalyticsViewphantich)
-
 //log analytics enpoint
 app.post('/analytics', db.addAnalytics)
 

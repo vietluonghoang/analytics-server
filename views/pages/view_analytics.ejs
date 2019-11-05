@@ -3,32 +3,41 @@
 <head>
 </head>
 <body>
-<center>
-<div class="container">
-<h2>Analytics Results</h2>
-<table>
-	<tr>
-		<td><a href="https://wethoong-server.herokuapp.com/analytics/view/">View all</a></td>
-		<td><a href="https://wethoong-server.herokuapp.com/analytics/app_open/">View app_open</a></td>
-		<td><a href="https://wethoong-server.herokuapp.com/analytics/view_phantich/">View view_phantich</a></td>
-	</tr>
-</table>
-<ul>
-	<li><b>Number of users: </b>
-		<%= eventCountByUsers.length%>
-	</li>
-	</ul>
-	<br>
-	<br>
-	<table border="1" cellpadding="5">
-		<% var order = 1 %>
-		<tr><td></td><td align="center">Ads Id</td><td align="center">Times of appear</td><td align="center"></td></tr>
-		<% eventCountByUsers.forEach(function(r) { %>
-        	<tr><td><%= order%></td><td><%= r.adsid %> </td><td align="center"> <%= r.timesofaction %></td><td align="center"> <a href="https://wethoong-server.herokuapp.com/analytics/view/<%= r.adsid %>">View details</a></td></tr>
-        	<% order += 1 %>
-    	<% }); %>
-	</table>
-</div>
-</center>
+	<center>
+		<div class="container">
+			<h2>Analytics Results</h2>
+			<table>
+				<tr>
+					<td><a href="https://wethoong-server.herokuapp.com/analytics/view/">View all</a></td>
+					<td><a href="https://wethoong-server.herokuapp.com/analytics/app_open/">View app_open</a></td>
+					<td><a href="https://wethoong-server.herokuapp.com/analytics/view_phantich/">View view_phantich</a></td>
+				</tr>
+			</table>
+			<ul>
+				<li><b>Number of users: </b>
+					<%= eventCountByUsers.length%>
+				</li>
+				<li>
+					<table>
+						<tr>
+							<td><a href="https://wethoong-server.herokuapp.com/analytics/view/range/7">7 days</a></td>
+							<td><a href="https://wethoong-server.herokuapp.com/analytics/view/range/14">14 days</a></td>
+							<td><a href="https://wethoong-server.herokuapp.com/analytics/view/range/28">28 days</a></td>
+						</tr>
+					</table>
+				</li>
+			</ul>
+			<br>
+			<br>
+			<table border="1" cellpadding="5">
+				<% var order = 1 %>
+				<tr><td></td><td align="center">Ads Id</td><td align="center">Times of appear</td><td align="center"></td></tr>
+				<% eventCountByUsers.forEach(function(r) { %>
+				<tr><td><%= order%></td><td><%= r.adsid %> </td><td align="center"> <%= r.timesofaction %></td><td align="center"> <a href="https://wethoong-server.herokuapp.com/analytics/view/<%= r.adsid %>">View details</a></td></tr>
+				<% order += 1 %>
+				<% }); %>
+			</table>
+		</div>
+	</center>
 </body>
 </html>

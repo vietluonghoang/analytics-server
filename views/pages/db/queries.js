@@ -6,13 +6,20 @@ const pool = new Pool({
 
 const viewAnalytics = async (request, response) => {
   const id = request.params.id
+  const range = request.params.range
   console.error("=+=+=ID: " + id);
   if (id == undefined) {
     try {
       // const result = await pool.query('SELECT * FROM user_info ORDER BY idforvendor, adsid');
       // console.log('raw result is ',result);
-      const countPerUser = await pool.query('select adsid, count(adsid) as timesOfAction from user_info group by adsid order by timesOfAction desc');
-      
+      const countPerUser = undefined
+      if (range != undefined){
+        timestamp = new Date()
+        timestamp.setDate(timestamp.getDate() - range)
+        countPerUser = await pool.query('select adsid, count(adsid) as timesOfAction from user_info where collectiondate > $1  group by adsid order by timesOfAction desc', [timestamp]);
+      } else {}
+        countPerUser = await pool.query('select adsid, count(adsid) as timesOfAction from user_info group by adsid order by timesOfAction desc');
+      }
       const results = {eventCountByUsers: (countPerUser) ? countPerUser.rows : null};
       // console.log('manipulated result is ',results);
       response.render('pages/view_analytics', results );
