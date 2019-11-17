@@ -254,18 +254,25 @@ const addAnalytics = (request, response) => {
   if (!valid) {
     response.status(200).send('{"status":"Fail"}')
   }else{
+    rowCount = 0
     switch(action){
       case "app_open":
-        updateAppopenAnalytics(idforvendor, adsidLowercase, devicename, osname, osversion, appversion, appversionnumber, dbversion, timestamp)
+        rowCount = updateAppopenAnalytics(idforvendor, adsidLowercase, devicename, osname, osversion, appversion, appversionnumber, dbversion, timestamp)
         break
       case "view_phantich":
-        updateViewphantichAnalytics(actionvalue)
+        rowCount = updateViewphantichAnalytics(actionvalue)
         break
+    }
+    if (results.rowCount == 1) {
+      response.status(200).send('{"status":"Success"}')
+    } else {
+      response.status(200).send('{"status":"Fail"}')
     }
   }
 }
 
 function updateAppopenAnalytics(idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, dbversion, timestamp){
+  rowCount = 0
   pool.query('SELECT * FROM user_last_state WHERE adsid = $1', [adsid], (error, results) => {
     if (results.rowCount > 0) {
       lastOpenCount = results.rows[0].opencount + 1
@@ -274,13 +281,14 @@ function updateAppopenAnalytics(idforvendor, adsid, devicename, osname, osversio
         if (error) {
           throw error
         }
-        if (results.rowCount == 1) {
-          response.status(200).send('{"status":"Success"}')
-        } else {
-          response.status(200).send('{"status":"Fail"}')
-        }
+        // if (results.rowCount == 1) {
+        //   response.status(200).send('{"status":"Success"}')
+        // } else {
+        //   response.status(200).send('{"status":"Fail"}')
+        // }
         // response.json({Result: results})
         // response.status(201).send(`User added with ID: ${results.insertId}`)
+        rowCount = results.rowCount
       })
     }else{
       console.log('-- new user found ');
@@ -288,20 +296,23 @@ function updateAppopenAnalytics(idforvendor, adsid, devicename, osname, osversio
         if (error) {
           throw error
         }
-        if (results.rowCount == 1) {
-          response.status(200).send('{"status":"Success"}')
-        } else {
-          response.status(200).send('{"status":"Fail"}')
-        }
+        // if (results.rowCount == 1) {
+        //   response.status(200).send('{"status":"Success"}')
+        // } else {
+        //   response.status(200).send('{"status":"Fail"}')
+        // }
         // response.json({Result: results})
         // response.status(201).send(`User added with ID: ${results.insertId}`)
+        rowCount = results.rowCount
       })
     }
   })
+  return rowCount
 }
 
 function updateViewphantichAnalytics(phantichId){
   openCount = 0
+  rowCount = 0
   pool.query('SELECT openCount FROM phantich WHERE id_key = $1', [phantichId], (error, results) => {
     if (results.rowCount > 0) {
       openCount = results.rows[0].openCount + 1
@@ -309,17 +320,19 @@ function updateViewphantichAnalytics(phantichId){
     }
   })
   pool.query('update phantich set openCount = $1', [openCount], (error, results) => {
-        if (error) {
-          throw error
-        }
-        if (results.rowCount == 1) {
-          response.status(200).send('{"status":"Success"}')
-        } else {
-          response.status(200).send('{"status":"Fail"}')
-        }
+    if (error) {
+      throw error
+    }
+        // if (results.rowCount == 1) {
+        //   response.status(200).send('{"status":"Success"}')
+        // } else {
+        //   response.status(200).send('{"status":"Fail"}')
+        // }
         // response.json({Result: results})
         // response.status(201).send(`User added with ID: ${results.insertId}`)
+        rowCount = results.rowCount
       })
+  return rowCount
 }
 
 const redeemAdsOptoutCoupon = (request, response) => {
