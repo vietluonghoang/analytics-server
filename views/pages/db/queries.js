@@ -277,7 +277,7 @@ function updateAppopenAnalytics(idforvendor, adsid, devicename, osname, osversio
     if (results.rowCount > 0) {
       lastOpenCount = results.rows[0].opencount + 1
       console.log('-- found old user with opencount: ', lastOpenCount);
-      pool.query('update user_last_state set idforvendor = $1, devicename = $2, osname = $3, osversion = $4, appversion = $5, appversionnumber = $6, dbversion = $7, opencount = $8 collectiondate = $9 where adsid = $10', [idforvendor, devicename, osname, osversion, appversion, appversionnumber, dbversion, lastOpenCount,timestamp, adsid], (error, results) => {
+      pool.query('update user_last_state set idforvendor = $1, devicename = $2, osname = $3, osversion = $4, appversion = $5, appversionnumber = $6, dbversion = $7, opencount = $8, collectiondate = $9 where adsid = $10', [idforvendor, devicename, osname, osversion, appversion, appversionnumber, dbversion, lastOpenCount,timestamp, adsid], (error, results) => {
         if (error) {
           throw error
         }
@@ -316,6 +316,7 @@ function updateViewphantichAnalytics(phantichId){
   pool.query('SELECT openCount FROM phantich WHERE id_key = $1', [phantichId], (error, results) => {
     if (results.rowCount > 0) {
       openCount = results.rows[0].openCount + 1
+      console.log('-- found phantich: ', phantichId);
       console.log('-- found phantich with opencount: ', openCount);
     }
   })
