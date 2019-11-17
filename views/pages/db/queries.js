@@ -320,10 +320,11 @@ function updateViewphantichAnalytics(phantichId){
       console.log('-- found phantich with opencount: ', openCount);
     }
   })
-  pool.query('update phantich set opencount = $1', [openCount], (error, results) => {
+  pool.query('update phantich set opencount = $1 where id_key = $2', [openCount, phantichId], (error, results) => {
     if (error) {
       throw error
     }
+    console.log('-- update phantich with results: ', results);
         // if (results.rowCount == 1) {
         //   response.status(200).send('{"status":"Success"}')
         // } else {
