@@ -254,26 +254,18 @@ const addAnalytics = (request, response) => {
   if (!valid) {
     response.status(200).send('{"status":"Fail"}')
   }else{
-    rowCount = 0
     switch(action){
       case "app_open":
-        rowCount = updateAppopenAnalytics(idforvendor, adsidLowercase, devicename, osname, osversion, appversion, appversionnumber, dbversion, timestamp)
+        updateAppopenAnalytics(idforvendor, adsidLowercase, devicename, osname, osversion, appversion, appversionnumber, dbversion, timestamp, response)
         break
       case "view_phantich":
-        rowCount = updateViewphantichAnalytics(actionvalue)
+        updateViewphantichAnalytics(actionvalue, response)
         break
-    }
-    console.log('=== finish updating analytics with code: ', rowCount);
-    if (rowCount == 1) {
-      response.status(200).send('{"status":"Success"}')
-    } else {
-      response.status(200).send('{"status":"Fail"}')
     }
   }
 }
 
-function updateAppopenAnalytics(idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, dbversion, timestamp){
-  rowCount = 0
+function updateAppopenAnalytics(idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, dbversion, timestamp, response){
   pool.query('SELECT * FROM user_last_state WHERE adsid = $1', [adsid], (error, results) => {
     if (results.rowCount > 0) {
       lastOpenCount = results.rows[0].opencount + 1
@@ -282,14 +274,13 @@ function updateAppopenAnalytics(idforvendor, adsid, devicename, osname, osversio
         if (error) {
           throw error
         }
-        // if (results.rowCount == 1) {
-        //   response.status(200).send('{"status":"Success"}')
-        // } else {
-        //   response.status(200).send('{"status":"Fail"}')
-        // }
+        if (results.rowCount == 1) {
+          response.status(200).send('{"status":"Success"}')
+        } else {
+          response.status(200).send('{"status":"Fail"}')
+        }
         // response.json({Result: results})
         // response.status(201).send(`User added with ID: ${results.insertId}`)
-        rowCount = results.rowCount
       })
     }else{
       console.log('-- new user found ');
@@ -297,23 +288,20 @@ function updateAppopenAnalytics(idforvendor, adsid, devicename, osname, osversio
         if (error) {
           throw error
         }
-        // if (results.rowCount == 1) {
-        //   response.status(200).send('{"status":"Success"}')
-        // } else {
-        //   response.status(200).send('{"status":"Fail"}')
-        // }
+        if (results.rowCount == 1) {
+          response.status(200).send('{"status":"Success"}')
+        } else {
+          response.status(200).send('{"status":"Fail"}')
+        }
         // response.json({Result: results})
         // response.status(201).send(`User added with ID: ${results.insertId}`)
-        rowCount = results.rowCount
       })
     }
   })
-  return rowCount
 }
 
-function updateViewphantichAnalytics(phantichId){
+function updateViewphantichAnalytics(phantichId, response){
   openCount = 0
-  rowCount = 0
   pool.query('SELECT openCount FROM phantich WHERE id_key = $1', [phantichId], (error, results) => {
     if (results.rowCount > 0) {
       openCount = results.rows[0].opencount + 1
@@ -324,20 +312,16 @@ function updateViewphantichAnalytics(phantichId){
         if (error) {
           throw error
         }
-        console.log('-- update phantich with results: ', results);
-        // if (results.rowCount == 1) {
-        //   response.status(200).send('{"status":"Success"}')
-        // } else {
-        //   response.status(200).send('{"status":"Fail"}')
-        // }
+        if (results.rowCount == 1) {
+          response.status(200).send('{"status":"Success"}')
+        } else {
+          response.status(200).send('{"status":"Fail"}')
+        }
         // response.json({Result: results})
         // response.status(201).send(`User added with ID: ${results.insertId}`)
-        rowCount = results.rowCount
       })
     }
   })
-  
-  return rowCount
 }
 
 const redeemAdsOptoutCoupon = (request, response) => {
