@@ -317,9 +317,12 @@ function updateViewphantichAnalytics(phantichId){
     if (results.rowCount > 0) {
       openCount = results.rows[0].opencount + 1
       console.log('-- found phantich: ', phantichId);
+      console.log('-- found phantich with original opencount: ', results.rows[0].opencount);
       console.log('-- found phantich with opencount: ', openCount);
     }
   })
+
+  console.log('-- found phantich with opencount (outside): ', openCount);
   pool.query('update phantich set opencount = $1 where id_key = $2', [openCount, phantichId], (error, results) => {
     if (error) {
       throw error
