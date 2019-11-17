@@ -268,7 +268,9 @@ const addAnalytics = (request, response) => {
 function updateAppopenAnalytics(idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, dbversion, timestamp){
   pool.query('SELECT * FROM user_last_state WHERE adsid = $1', [adsid], (error, results) => {
     if (results.rowCount > 0) {
-      pool.query('update user_last_state set idforvendor = $1, devicename = $2, osname = $3, osversion = $4, appversion = $5, appversionnumber = $6, dbversion = $7, collectiondate = $8 where adsid = $9', [idforvendor, devicename, osname, osversion, appversion, appversionnumber, dbversion, timestamp, adsid], (error, results) => {
+      lastOpenCount = results.rows[0].opencount + 1
+      console.log('-- found old user with opencount: ', lastOpenCount);
+      pool.query('update user_last_state set idforvendor = $1, devicename = $2, osname = $3, osversion = $4, appversion = $5, appversionnumber = $6, dbversion = $7, opencount = $8 collectiondate = $9 where adsid = $10', [idforvendor, devicename, osname, osversion, appversion, appversionnumber, dbversion, lastOpenCount,timestamp, adsid], (error, results) => {
         if (error) {
           throw error
         }
@@ -281,7 +283,8 @@ function updateAppopenAnalytics(idforvendor, adsid, devicename, osname, osversio
         // response.status(201).send(`User added with ID: ${results.insertId}`)
       })
     }else{
-      pool.query('INSERT INTO user_last_state (idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, dbversion, collectiondate) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)', [idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, dbversion, timestamp], (error, results) => {
+      console.log('-- new user found ');
+      pool.query('INSERT INTO user_last_state (idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, dbversion, opencount, collectiondate) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)', [idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, dbversion, 1, timestamp], (error, results) => {
         if (error) {
           throw error
         }
@@ -302,6 +305,7 @@ function updateViewphantichAnalytics(phantichId){
   pool.query('SELECT openCount FROM phantich WHERE id_key = $1', [phantichId], (error, results) => {
     if (results.rowCount > 0) {
       openCount = results.rows[0].openCount + 1
+      console.log('-- found phantich with opencount: ', opencount);
     }
   })
   pool.query('update phantich set openCount = $1', [openCount], (error, results) => {
