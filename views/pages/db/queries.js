@@ -320,7 +320,7 @@ function updateViewphantichAnalytics(phantichId){
       console.log('-- found phantich with opencount: ', openCount);
     }
   })
-  pool.query('update phantich set openCount = $1', [openCount], (error, results) => {
+  pool.query('update phantich set opencount = $1', [openCount], (error, results) => {
     if (error) {
       throw error
     }
