@@ -16,9 +16,9 @@ const viewAnalytics = async (request, response) => {
       if (range != undefined){
         timestamp = new Date()
         timestamp.setDate(timestamp.getDate() - range)
-        countPerUser = await pool.query('select adsid, count(adsid) as timesOfAction from user_info where collectiondate > $1  group by adsid order by timesOfAction desc', [timestamp]);
+        countPerUser = await pool.query('select adsid, opencount as timesOfAction from user_last_state where collectiondate > $1 order by timesOfAction desc', [timestamp]);
       } else {
-        countPerUser = await pool.query('select adsid, count(adsid) as timesOfAction from user_info group by adsid order by timesOfAction desc');
+        countPerUser = await pool.query('select adsid, opencount as timesOfAction from user_last_state order by timesOfAction desc');
       }
       const results = {eventCountByUsers: (countPerUser) ? countPerUser.rows : null};
       // console.log('manipulated result is ',results);
@@ -29,7 +29,7 @@ const viewAnalytics = async (request, response) => {
     }
   }else{
     try{
-      const actionDetailsByUser = await pool.query('SELECT * FROM user_info WHERE adsid = $1 order by collectiondate desc', [id])
+      const actionDetailsByUser = await pool.query('SELECT * FROM user_last_state WHERE adsid = $1 order by collectiondate desc', [id])
       console.log('check available raw analytics result: ', actionDetailsByUser);
       const results = {userDetails: (actionDetailsByUser) ? actionDetailsByUser.rows : null};  
       console.log('check available analytics result: ', results);
@@ -49,18 +49,18 @@ const viewAnalyticsAppopen = async (request, response) => {
     try {
       // const result = await pool.query('SELECT * FROM user_info ORDER BY idforvendor, adsid');
       // console.log('raw result is ',result);
-      const countPerUser = await pool.query('select adsid, count(adsid) as timesOfAction from user_info where action = \'app_open\' group by adsid order by timesOfAction desc');
+      const countPerUser = await pool.query('select adsid, opencount as timesOfAction from user_last_state order by timesOfAction desc');
       
       const results = {eventCountByUsers: (countPerUser) ? countPerUser.rows : null};
       // console.log('manipulated result is ',results);
       response.render('pages/view_analytics', results );
     } catch (err) {
       console.error(err);
-      response.send("Error " + err);
+      response.send("Error : " + err);
     }
   }else{
     try{
-      const actionDetailsByUser = await pool.query('SELECT * FROM user_info WHERE action = \'app_open\' and adsid = $1 order by collectiondate desc', [id])
+      const actionDetailsByUser = await pool.query('SELECT * FROM user_last_state WHERE adsid = $1 order by collectiondate desc', [id])
       console.log('check available raw analytics result: ', actionDetailsByUser);
       const results = {userDetails: (actionDetailsByUser) ? actionDetailsByUser.rows : null};  
       console.log('check available analytics result: ', results);
@@ -80,7 +80,7 @@ const viewAnalyticsViewphantich = async (request, response) => {
     try {
       // const result = await pool.query('SELECT * FROM user_info ORDER BY idforvendor, adsid');
       // console.log('raw result is ',result);
-      const countPerUser = await pool.query('select actionvalue, count(actionvalue) as timesOfAction from user_info where action = \'view_phantich\' group by actionvalue order by timesOfAction desc');
+      const countPerUser = await pool.query('select id_key as actionvalue, opencount as timesOfAction from phantich order by timesOfAction desc');
       
       const results = {phantichCount: (countPerUser) ? countPerUser.rows : null};
       // console.log('manipulated result is ',results);
@@ -193,7 +193,7 @@ const getAppConfig = (request, response) => {
 
 //idforvendor | adsid | devicename | osname | osversion | appversion | appversionnumber | action | actiontype | actionvalue | collectiondate
 const addAnalytics = (request, response) => {
-  const { idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, action, actiontype, actionvalue } = request.body
+  const { idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, action, actiontype, actionvalue, dbversion } = request.body
   console.log('body is ',request.body);
   console.log('idforvendor is ', idforvendor);
   console.log('adsid is ', adsid);
@@ -205,6 +205,7 @@ const addAnalytics = (request, response) => {
   console.log('action is ', action);
   console.log('actiontype is ', actiontype);
   console.log('actionvalue is ', actionvalue);
+  console.log('dbversion is ', dbversion);
 
   timestamp = new Date()
   console.log('timestamp is ', timestamp);
@@ -219,6 +220,8 @@ const addAnalytics = (request, response) => {
   }
   if (adsid == undefined) {
     valid = false
+  } else {
+    adsidLowercase = adsid.toLowerCase()
   }
   if (devicename == undefined) {
     valid = false
@@ -244,23 +247,75 @@ const addAnalytics = (request, response) => {
   if (actionvalue == undefined) {
     valid = false
   }
+  if (dbversion == undefined) {
+    dbversion = ""
+  }
 
   if (!valid) {
     response.status(200).send('{"status":"Fail"}')
   }else{
-    pool.query('INSERT INTO user_info (idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, action, actiontype, actionvalue, collectiondate) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)', [idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, action, actiontype, actionvalue, timestamp], (error, results) => {
-      if (error) {
-        throw error
-      }
-      if (results.rowCount == 1) {
-        response.status(200).send('{"status":"Success"}')
-      } else {
-        response.status(200).send('{"status":"Fail"}')
-      }
-      // response.json({Result: results})
-      // response.status(201).send(`User added with ID: ${results.insertId}`)
-    })
+    switch(action){
+      case "app_open":
+        updateAppopenAnalytics(idforvendor, adsidLowercase, devicename, osname, osversion, appversion, appversionnumber, dbversion, timestamp)
+        break
+      case "view_phantich":
+        updateViewphantichAnalytics(actionvalue)
+        break
+    }
   }
+}
+
+function updateAppopenAnalytics(idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, dbversion, timestamp){
+  pool.query('SELECT * FROM user_last_state WHERE adsid = $1', [adsid], (error, results) => {
+    if (results.rowCount > 0) {
+      pool.query('update user_last_state set idforvendor = $1, devicename = $2, osname = $3, osversion = $4, appversion = $5, appversionnumber = $6, dbversion = $7, collectiondate = $8 where adsid = $9', [idforvendor, devicename, osname, osversion, appversion, appversionnumber, dbversion, timestamp, adsid], (error, results) => {
+        if (error) {
+          throw error
+        }
+        if (results.rowCount == 1) {
+          response.status(200).send('{"status":"Success"}')
+        } else {
+          response.status(200).send('{"status":"Fail"}')
+        }
+        // response.json({Result: results})
+        // response.status(201).send(`User added with ID: ${results.insertId}`)
+      })
+    }else{
+      pool.query('INSERT INTO user_last_state (idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, dbversion, collectiondate) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)', [idforvendor, adsid, devicename, osname, osversion, appversion, appversionnumber, dbversion, timestamp], (error, results) => {
+        if (error) {
+          throw error
+        }
+        if (results.rowCount == 1) {
+          response.status(200).send('{"status":"Success"}')
+        } else {
+          response.status(200).send('{"status":"Fail"}')
+        }
+        // response.json({Result: results})
+        // response.status(201).send(`User added with ID: ${results.insertId}`)
+      })
+    }
+  })
+}
+
+function updateViewphantichAnalytics(phantichId){
+  openCount = 0
+  pool.query('SELECT openCount FROM phantich WHERE id_key = $1', [phantichId], (error, results) => {
+    if (results.rowCount > 0) {
+      openCount = results.rows[0].openCount + 1
+    }
+  })
+  pool.query('update phantich set openCount = $1', [openCount], (error, results) => {
+        if (error) {
+          throw error
+        }
+        if (results.rowCount == 1) {
+          response.status(200).send('{"status":"Success"}')
+        } else {
+          response.status(200).send('{"status":"Fail"}')
+        }
+        // response.json({Result: results})
+        // response.status(201).send(`User added with ID: ${results.insertId}`)
+      })
 }
 
 const redeemAdsOptoutCoupon = (request, response) => {

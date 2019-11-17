@@ -24,7 +24,7 @@
 		<% var order = 1 %>
 		<tr><td></td><td align="center">PhantichID</td><td align="center">Times of View</td><td align="center"></td></tr>
 		<% phantichCount.forEach(function(r) { %>
-        	<tr><td><%= order%></td><td><%= r.actionvalue %> </td><td align="center"> <%= r.timesofaction %></td><td align="center"> <a href="https://wethoong-server.herokuapp.com/analytics/view_phantich/<%= r.actionvalue %>">View details</a></td></tr>
+        	<tr><td><%= order%></td><td><%= r.actionvalue %> </td><td align="center"> <%= r.timesofaction %></td><td align="center"> <a href="https://wethoong-server.herokuapp.com/phantich/view/<%= r.actionvalue %>">View details</a></td></tr>
         	<% order += 1 %>
     	<% }); %>
 	</table>
