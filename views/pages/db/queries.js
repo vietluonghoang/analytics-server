@@ -263,7 +263,7 @@ const addAnalytics = (request, response) => {
         rowCount = updateViewphantichAnalytics(actionvalue)
         break
     }
-    if (results.rowCount == 1) {
+    if (rowCount == 1) {
       response.status(200).send('{"status":"Success"}')
     } else {
       response.status(200).send('{"status":"Fail"}')
@@ -316,7 +316,7 @@ function updateViewphantichAnalytics(phantichId){
   pool.query('SELECT openCount FROM phantich WHERE id_key = $1', [phantichId], (error, results) => {
     if (results.rowCount > 0) {
       openCount = results.rows[0].openCount + 1
-      console.log('-- found phantich with opencount: ', opencount);
+      console.log('-- found phantich with opencount: ', openCount);
     }
   })
   pool.query('update phantich set openCount = $1', [openCount], (error, results) => {
