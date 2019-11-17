@@ -248,7 +248,7 @@ const addAnalytics = (request, response) => {
     valid = false
   }
   if (dbversion == undefined) {
-    dbversion = ""
+    //TODO: this will become a condition once client sends this data
   }
 
   if (!valid) {
