@@ -263,6 +263,7 @@ const addAnalytics = (request, response) => {
         rowCount = updateViewphantichAnalytics(actionvalue)
         break
     }
+    console.log('=== finish updating analytics with code: ', rowCount);
     if (rowCount == 1) {
       response.status(200).send('{"status":"Success"}')
     } else {
@@ -319,15 +320,11 @@ function updateViewphantichAnalytics(phantichId){
       console.log('-- found phantich: ', phantichId);
       console.log('-- found phantich with original opencount: ', results.rows[0].opencount);
       console.log('-- found phantich with opencount: ', openCount);
-    }
-  })
-
-  console.log('-- found phantich with opencount (outside): ', openCount);
-  pool.query('update phantich set opencount = $1 where id_key = $2', [openCount, phantichId], (error, results) => {
-    if (error) {
-      throw error
-    }
-    console.log('-- update phantich with results: ', results);
+      pool.query('update phantich set opencount = $1 where id_key = $2', [openCount, phantichId], (error, results) => {
+        if (error) {
+          throw error
+        }
+        console.log('-- update phantich with results: ', results);
         // if (results.rowCount == 1) {
         //   response.status(200).send('{"status":"Success"}')
         // } else {
@@ -337,6 +334,9 @@ function updateViewphantichAnalytics(phantichId){
         // response.status(201).send(`User added with ID: ${results.insertId}`)
         rowCount = results.rowCount
       })
+    }
+  })
+  
   return rowCount
 }
 
