@@ -315,7 +315,7 @@ function updateViewphantichAnalytics(phantichId){
   rowCount = 0
   pool.query('SELECT openCount FROM phantich WHERE id_key = $1', [phantichId], (error, results) => {
     if (results.rowCount > 0) {
-      openCount = results.rows[0].openCount + 1
+      openCount = results.rows[0].opencount + 1
       console.log('-- found phantich: ', phantichId);
       console.log('-- found phantich with opencount: ', openCount);
     }
