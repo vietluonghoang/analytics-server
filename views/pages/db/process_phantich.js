@@ -97,7 +97,7 @@ const addPhantich = async (request, response) => {
 				response.render('pages/InsertPhantich', "Failed!!!")
 			}
 		} catch (err){
-			console.log('-- ERROR: ', error);
+			console.log('-- ERROR: ', err);
 			response.render('pages/InsertPhantich', err)
 		}
 	}
