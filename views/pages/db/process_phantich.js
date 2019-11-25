@@ -93,14 +93,15 @@ const addPhantich = (request, response) => {
 				console.log('-- ERROR: ', error);
 			}
 			console.log('-- Results: ', results);
-			if (results.rowCount == 1) {
-				console.log('-- Success');
-				response.status(200).send('{"status":"Success"}')
-			} else {
-				console.log('-- Failed');
-				response.status(200).send('{"status":"Fail"}')
-			}
-		})
+			// if (results.rowCount > 1) {
+				if (error == undefined) {
+					console.log('-- Success');
+					response.status(200).send('{"status":"Success"}')
+				} else {
+					console.log('-- Failed');
+					response.status(200).send('{"status":"Fail"}')
+				}
+			})
 	}
 }
 
