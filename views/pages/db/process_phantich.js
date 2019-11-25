@@ -85,7 +85,7 @@ const addPhantich = (request, response) => {
 	}
 
 	if (!valid) {
-		response.status(200).send('{"status":"Fail"}')
+		response.render('pages/insertPhantich');
 	}else{
 		console.log('-- Executing query: ', queryString);
 		pool.query(queryString, [], (error, results) => {
