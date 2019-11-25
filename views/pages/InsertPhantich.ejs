@@ -2,14 +2,51 @@
 <html>
 <head>
 	<title>Insert Phantich</title>
+	<style>
+	#info {
+		font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	#info td, #info th {
+		border: 1px solid #ddd;
+		padding: 8px;
+	}
+
+	#info tr:nth-child(even){background-color: #f2f2f2;}
+
+	#info tr:hover {background-color: #ddd;}
+
+	#info th {
+		padding-top: 12px;
+		padding-bottom: 12px;
+		text-align: left;
+		background-color: #4CAF50;
+		color: white;
+	}
+
+	#headerMenu td {
+		padding-right: 10px;
+		padding-left: 10px;
+		text-align: center;
+		background-color: #f2f2f2;
+	}
+
+	#headerMenu td:hover {
+		background-color: #ddd;
+	}
+
+</style>
 </head>
 <body>
 	<center>
-		<table name = "headerMenu">
+		<table id = "headerMenu">
 			<tr>
 				<td><a href="https://wethoong-server.herokuapp.com/analytics/view/">View all</a></td>
-				<td style="border-style:solid; border-left-width:2px;"><a href="https://wethoong-server.herokuapp.com/analytics/app_open/">View app_open</a></td>
-				<td style="border-style:solid; border-left-width:2px;"><a href="https://wethoong-server.herokuapp.com/analytics/view_phantich/">View view_phantich</a></td>
+				<td ><a href="https://wethoong-server.herokuapp.com/analytics/app_open/">View app_open</a></td>
+				<td ><a href="https://wethoong-server.herokuapp.com/analytics/view_phantich/">View view_phantich</a></td>
+				<td><a href = "https://wethoong-server.herokuapp.com/phantich/view/"> View all Phantich </a></td>
 			</tr>
 		</table>
 		<form method= "post" target= "">
