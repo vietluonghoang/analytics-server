@@ -4,37 +4,47 @@
 	<title>Insert Phantich</title>
 </head>
 <body>
-	<form method= "post" target= "">
-		<table>
+	<center>
+		<table name = "headerMenu">
 			<tr>
-				<td>query: </td><td><textarea id = "queryString" name = "queryString"></textarea></td>
+				<td><a href="https://wethoong-server.herokuapp.com/analytics/view/">View all</a></td>
+				<td style="border-style:solid; border-left-width:2px;"><a href="https://wethoong-server.herokuapp.com/analytics/app_open/">View app_open</a></td>
+				<td style="border-style:solid; border-left-width:2px;"><a href="https://wethoong-server.herokuapp.com/analytics/view_phantich/">View view_phantich</a></td>
 			</tr>
-			<tr>
-				<td></td><td><button>Execute</button></td>
-			</tr>
+		</table>
+		<form method= "post" target= "">
+			<table>
+				<tr>
+					<td>query: </td><td><textarea id = "queryString" name = "queryString"></textarea></td>
+				</tr>
+				<tr>
+					<td></td><td><button>Execute</button></td>
+				</tr>
 
-			<% if(typeof message != 'undefined'){ %>
+				<% if(typeof message != 'undefined'){ %>
 				<% if(message != "Error"){ %>
-					<% if(message != "Init"){ %>
-						<tr>
-							<td><p> <font color = "blue"> Success!</font></p></td><td><%= details %></td>
-						</tr>
-					<% } else { %>
-						<tr>
-							<td><p> <font color = "black"> Fill query plz!</font></p></td><td></td>
-						</tr>
-						<% } %>
+				<% if(message != "Init"){ %>
+				<tr>
+					<td><p> <font color = "blue"> Success!</font></p></td><td><%= details %></td>
+				</tr>
 				<% } else { %>
-						<tr>
-							<td><p> <font color = "red"> Failed!!!</font></p></td><td><%= details %></td>
-						</tr>
+				<tr>
+					<td><p> <font color = "black"> Fill query plz!</font></p></td><td></td>
+				</tr>
 				<% } %>
-			<% } else { %>
+				<% } else { %>
+				<tr>
+					<td><p> <font color = "red"> Failed!!!</font></p></td><td><%= details %></td>
+				</tr>
+				<% } %>
+				<% } else { %>
 				<tr>
 					<td></td><td><p> <font color = "red">undefined</font></p></td>
 				</tr>
-			<% } %>
-		</table>
-	</form>
+				<% } %>
+			</table>
+		</form>
+	</center>
+	
 </body>
 </html>

@@ -3,33 +3,33 @@
 <head>
 </head>
 <body>
-<center>
-<div class="container">
-<h2>View Phantich Results</h2>
-<table>
-	<tr>
-		<td><a href="https://wethoong-server.herokuapp.com/analytics/view/">View all</a></td>
-		<td><a href="https://wethoong-server.herokuapp.com/analytics/app_open/">View app_open</a></td>
-		<td><a href="https://wethoong-server.herokuapp.com/analytics/view_phantich/">View view_phantich</a></td>
-	</tr>
-</table>
-<ul>
-	<li><b>Number of view: </b>
-		<%= phantichCountByPhantich.length%>
-	</li>
-	</ul>
-	<br>
-	<br>
-	<p>
-		<span><a href="https://wethoong-server.herokuapp.com/analytics/view/view_phantich/">View Summary</a></span>
-	</p>
-	<table border="1" cellpadding="5">
-		<tr><td align="center">User's ID for Vendor</td><td align="center">Ads Id</td><td align="center">Device Name</td><td align="center">OS Name</td><td align="center">OS Version</td><td align="center">App Version</td><td align="center">App Version Number</td><td align="center">Action</td><td align="center">Action Type</td><td align="center">Action Value</td><td align="center">Timestamp</td></tr>
-		<% phantichCountByPhantich.forEach(function(r) { %>
-        	<tr><td align="center"><%= r.idforvendor %> </td><td align="center"><%= r.adsid %> </td><td align="center"><%= r.devicename %> </td><td align="center"><%= r.osname %> </td><td align="center"><%= r.osversion %> </td><td align="center"><%= r.appversion %> </td><td align="center"><%= r.appversionnumber %> </td><td align="center"><%= r.action %> </td><td align="center"><%= r.actiontype %> </td><td align="center"><%= r.actionvalue %> </td><td align="center"><%= r.collectiondate %> </td></tr>
-    	<% }); %>
-	</table>
-</div>
-</center>
+	<center>
+		<div class="container">
+			<h2>View Phantich Results</h2>
+			<table name = "headerMenu">
+				<tr>
+					<td><a href="https://wethoong-server.herokuapp.com/analytics/view/">View all</a></td>
+					<td style="border-style:solid; border-left-width:2px;"><a href="https://wethoong-server.herokuapp.com/analytics/app_open/">View app_open</a></td>
+					<td style="border-style:solid; border-left-width:2px;"><a href="https://wethoong-server.herokuapp.com/analytics/view_phantich/">View view_phantich</a></td>
+				</tr>
+			</table>
+			<ul>
+				<li><b>Number of view: </b>
+					<%= phantichCountByPhantich.length%>
+				</li>
+			</ul>
+			<br>
+			<br>
+			<p>
+				<span><a href="https://wethoong-server.herokuapp.com/analytics/view/view_phantich/">View Summary</a></span>
+			</p>
+			<table border="1" cellpadding="5">
+				<tr><td align="center">User's ID for Vendor</td><td align="center">Ads Id</td><td align="center">Device Name</td><td align="center">OS Name</td><td align="center">OS Version</td><td align="center">App Version</td><td align="center">App Version Number</td><td align="center">Action</td><td align="center">Action Type</td><td align="center">Action Value</td><td align="center">Timestamp</td></tr>
+				<% phantichCountByPhantich.forEach(function(r) { %>
+				<tr><td align="center"><%= r.idforvendor %> </td><td align="center"><%= r.adsid %> </td><td align="center"><%= r.devicename %> </td><td align="center"><%= r.osname %> </td><td align="center"><%= r.osversion %> </td><td align="center"><%= r.appversion %> </td><td align="center"><%= r.appversionnumber %> </td><td align="center"><%= r.action %> </td><td align="center"><%= r.actiontype %> </td><td align="center"><%= r.actionvalue %> </td><td align="center"><%= r.collectiondate %> </td></tr>
+				<% }); %>
+			</table>
+		</div>
+	</center>
 </body>
 </html>

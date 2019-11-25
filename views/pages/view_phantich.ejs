@@ -6,11 +6,11 @@
 	<center>
 		<div class="container">
 			<h2>Phantich Details</h2>
-			<table>
+			<table name = "headerMenu">
 				<tr>
 					<td><a href="https://wethoong-server.herokuapp.com/analytics/view/">View all</a></td>
-					<td><a href="https://wethoong-server.herokuapp.com/analytics/app_open/">View app_open</a></td>
-					<td><a href="https://wethoong-server.herokuapp.com/analytics/view_phantich/">View view_phantich</a></td>
+					<td style="border-style:solid; border-left-width:2px;"><a href="https://wethoong-server.herokuapp.com/analytics/app_open/">View app_open</a></td>
+					<td style="border-style:solid; border-left-width:2px;"><a href="https://wethoong-server.herokuapp.com/analytics/view_phantich/">View view_phantich</a></td>
 				</tr>
 			</table>
 			<ul>
@@ -54,6 +54,10 @@
 							<tr>
 								<td align="center">Revision</td>
 								<td> <%= r.revision %></td>
+							</tr>
+							<tr>
+								<td align="center">OpenCount</td>
+								<td> <%= r.opencount %></td>
 							</tr>
 						</table>
 					</td>
