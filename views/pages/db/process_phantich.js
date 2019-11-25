@@ -85,7 +85,8 @@ const addPhantich = async (request, response) => {
 	}
 
 	if (!valid) {
-		response.render('pages/InsertPhantich');
+		const res = {message: 'Init', details: queryString}
+		response.render('pages/InsertPhantich', res);
 	}else{
 		console.log('-- Executing query: ', queryString);
 		try{

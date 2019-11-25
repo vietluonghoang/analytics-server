@@ -14,14 +14,13 @@
 			</tr>
 
 			<% if(typeof res != 'undefined'){ %>
-				<%= res %>
 				<% if(res.message != "Error"){ %>
 						<tr>
-							<td></td><td><p> <font color = "blue"> Success!</font></p></td>
+							<td><p> <font color = "blue"> Success!</font></p></td><td><%= res %></td>
 						</tr>
 				<% } else { %>
 						<tr>
-							<td></td><td><p> <font color = "red"> Failed!!!</font></p></td>
+							<td><p> <font color = "red"> Failed!!!</font></p></td><td><%= res %></td>
 						</tr>
 				<% } %>
 			<% } else { %>
