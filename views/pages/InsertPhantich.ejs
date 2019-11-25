@@ -13,18 +13,22 @@
 				<td></td><td><button>Execute</button></td>
 			</tr>
 
-			<!-- <% if(typeof passed != 'undefined'){ %> -->
-			<!-- <%= passed %>
-				<% if(passed){ %> -->
-				<!-- <tr>
+			<% if(typeof passed != 'undefined'){ %>
+			<%= passed %>
+				<% if(passed){ %>
+				<tr>
 					<td></td><td><p> <font color = "blue"> Success!</font></p></td>
 				</tr>
 				<% } else { %>
 				<tr>
 					<td></td><td><p> <font color = "red"> Failed!!!</font></p></td>
-				</tr> -->
-				<!-- <% } %> -->
-			<!-- <% } %> -->
+				</tr>
+				<% } %>
+			% } else { %>
+				<tr>
+					<td></td><td><p> <font color = "red"> Failed!!! undefined</font></p></td>
+				</tr>
+				<% } %>
 		</table>
 	</form>
 
