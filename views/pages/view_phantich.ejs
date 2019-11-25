@@ -36,6 +36,14 @@
 		background-color: #ddd;
 	}
 
+	#headerMenu th {
+		padding-top: 12px;
+		padding-bottom: 12px;
+		text-align: left;
+		background-color: #CCAF50;
+		color: white;
+	}
+
 	</style>
 </head>
 <body>
@@ -63,37 +71,37 @@
 				<% if(r.contentorder == 1) { %> 
 				<tr>
 					<td colspan= "5" align="center">
-						<table border="1" cellpadding="5">
+						<table id="headerMenu">
 							<tr>
-								<td align="center">Id Key</td>
+								<th align="center">Id Key</th>
 								<td> <a href="https://wethoong-server.herokuapp.com/phantich/view/<%= r.id_key %>"><%= r.id_key %></a> </td>
 							</tr>
 							<tr>
-								<td align="center">Author</td>
+								<th align="center">Author</th>
 								<td> <%= r.author %></td>
 							</tr>
 							<tr>
-								<td align="center">Title</td>
+								<th align="center">Title</th>
 								<td> <%= r.title %></td>
 							</tr>
 							<tr>
-								<td align="center">Short Description</td>
+								<th align="center">Short Description</th>
 								<td> <%= r.shortdescription %></td>
 							</tr>
 							<tr>
-								<td align="center">Source</td>
-								<td> <a href="<%= r.source %>">View source</a></td>
+								<th align="center">Source</th>
+								<td> <% if(r.source.length > 0){ %><a href="<%= r.source %>">View source</a><% } %></td>
 							</tr>
 							<tr>
-								<td align="center">Source Inapp</td>
-								<td> <a href="<%= r.source_inapp %>">View source</a></td>
+								<th align="center">Source Inapp</th>
+								<td> <% if(r.source_inapp.length > 0){ %><a href="<%= r.source_inapp %>">View source</a><% } %></td>
 							</tr>
 							<tr>
-								<td align="center">Revision</td>
+								<th align="center">Revision</th>
 								<td> <%= r.revision %></td>
 							</tr>
 							<tr>
-								<td align="center">OpenCount</td>
+								<th align="center">OpenCount</th>
 								<td> <%= r.opencount %></td>
 							</tr>
 						</table>
