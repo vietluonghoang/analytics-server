@@ -70,7 +70,7 @@ const getPhantich = async (request, response) => {
 }
 }
 
-const addPhantich = (request, response) => {
+const addPhantich = async (request, response) => {
 	const { queryString } = request.body
 	console.log('body is ',request.body);
 	console.log('queryString is ', queryString);
@@ -88,15 +88,18 @@ const addPhantich = (request, response) => {
 		response.render('pages/InsertPhantich');
 	}else{
 		console.log('-- Executing query: ', queryString);
-		pool.query(queryString, [], (error, results) => {
-			if (error) {
-				console.log('-- ERROR: ', error);
+		try{
+			const execQuery = await pool.query(queryString,)
+			console.log('-- Results: ', execQuery);
+			if (execQuery.rowCount == 1) {
+				response.render('pages/InsertPhantich', "Success!")
+			} else {
+				response.render('pages/InsertPhantich', "Failed!!!")
 			}
-			console.log('-- Results: ', results);
-			// if (results.rowCount > 1) {
-			const res = {error ? error : null};
-			response.render('pages/InsertPhantich', res );
-		})
+		} catch (err){
+			console.log('-- ERROR: ', error);
+			response.render('pages/InsertPhantich', err)
+		}
 	}
 }
 
