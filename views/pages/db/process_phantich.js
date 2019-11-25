@@ -85,7 +85,7 @@ const addPhantich = (request, response) => {
 	}
 
 	if (!valid) {
-		response.render('pages/insertPhantich');
+		response.render('pages/InsertPhantich');
 	}else{
 		console.log('-- Executing query: ', queryString);
 		pool.query(queryString, [], (error, results) => {
