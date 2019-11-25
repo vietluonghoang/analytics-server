@@ -91,14 +91,12 @@ const addPhantich = async (request, response) => {
 		try{
 			const execQuery = await pool.query(queryString,)
 			console.log('-- Results: ', execQuery);
-			if (execQuery.rowCount == 1) {
-				response.render('pages/InsertPhantich', "Success!")
-			} else {
-				response.render('pages/InsertPhantich', "Failed!!!")
-			}
+			const res = {message: 'executed', details: execQuery.rowCount}
+			response.render('pages/InsertPhantich', res)
 		} catch (err){
+			const res = {message: 'Error', details: err}
 			console.log('-- ERROR: ', err);
-			response.render('pages/InsertPhantich', err)
+			response.render('pages/InsertPhantich', res)
 		}
 	}
 }
