@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const app = express()
 const PORT = process.env.PORT || 5000
 const db = require('./views/pages/db/queries')
+const phantichprocessor = require('./views/pages/db/process_phantich')
 
 app.use(bodyParser.json())
 app.use(
@@ -86,14 +87,21 @@ app.get('/getConfig',db.getAppConfig)
 app.use(express.static(path.join(__dirname, 'public')))
 .set('views', path.join(__dirname, 'views'))
 .set('view engine', 'ejs')
-.get('/phantich/view', db.viewPhantich)
+.get('/phantich/view', phantichprocessor.viewPhantich)
 app.use(express.static(path.join(__dirname, 'public')))
 .set('views', path.join(__dirname, 'views'))
 .set('view engine', 'ejs')
-.get('/phantich/view/:id', db.viewPhantich)
+.get('/phantich/view/:id', phantichprocessor.viewPhantich)
 
 //get phantich enpoint
-app.get('/phantich/getPhantich',db.getPhantich)
+app.get('/phantich/getPhantich',phantichprocessor.getPhantich)
+
+app.use(express.static(path.join(__dirname, 'public')))
+.set('views', path.join(__dirname, 'views'))
+.set('view engine', 'ejs')
+.get('/phantich/add', phantichprocessor.addPhantich)
+//log analytics enpoint
+app.post('/analytics', db.addAnalytics)
 
 //redeemcoupon enpoint
 app.post('/redeemcoupon', db.redeemAdsOptoutCoupon)
