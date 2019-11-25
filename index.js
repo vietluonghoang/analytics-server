@@ -103,7 +103,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 .get('/phantich/add', phantichprocessor.addPhantich)
 
 //insert phantich target
-app.post('/phantich/new', phantichprocessor.addPhantich)
+app.post('/phantich/add', phantichprocessor.addPhantich)
 
 //log analytics enpoint
 app.post('/analytics', db.addAnalytics)
