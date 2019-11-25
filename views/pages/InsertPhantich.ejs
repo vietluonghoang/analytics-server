@@ -13,14 +13,14 @@
 				<td></td><td><button>Execute</button></td>
 			</tr>
 
-			<% if(typeof results != 'undefined'){ %>
-				<% if(results.message != "Error"){ %>
+			<% if(typeof message != 'undefined'){ %>
+				<% if(message != "Error"){ %>
 						<tr>
-							<td><p> <font color = "blue"> Success!</font></p></td><td><%= results %></td>
+							<td><p> <font color = "blue"> Success!</font></p></td><td><%= message %></td>
 						</tr>
 				<% } else { %>
 						<tr>
-							<td><p> <font color = "red"> Failed!!!</font></p></td><td><%= results %></td>
+							<td><p> <font color = "red"> Failed!!!</font></p></td><td><%= message %></td>
 						</tr>
 				<% } %>
 			<% } else { %>
