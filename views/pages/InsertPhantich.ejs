@@ -13,9 +13,9 @@
 				<td></td><td><button>Execute</button></td>
 			</tr>
 
-			<% if(typeof passed != 'undefined'){ %>
-				<%= passed %>
-				<% if(passed == 1){ %>
+			<% if(typeof res != 'undefined'){ %>
+				<%= res %>
+				<% if(res.message != "Error"){ %>
 						<tr>
 							<td></td><td><p> <font color = "blue"> Success!</font></p></td>
 						</tr>
@@ -26,7 +26,7 @@
 				<% } %>
 			<% } else { %>
 				<tr>
-					<td></td><td><p> <font color = "red"> Failed!!! undefined</font></p></td>
+					<td></td><td><p> <font color = "red">undefined</font></p></td>
 				</tr>
 			<% } %>
 		</table>
