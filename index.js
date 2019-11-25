@@ -96,10 +96,15 @@ app.use(express.static(path.join(__dirname, 'public')))
 //get phantich enpoint
 app.get('/phantich/getPhantich',phantichprocessor.getPhantich)
 
+//insert phantich page
 app.use(express.static(path.join(__dirname, 'public')))
 .set('views', path.join(__dirname, 'views'))
 .set('view engine', 'ejs')
 .get('/phantich/add', phantichprocessor.addPhantich)
+
+//insert phantich target
+app.post('/phantich/new', phantichprocessor.addPhantich)
+
 //log analytics enpoint
 app.post('/analytics', db.addAnalytics)
 
