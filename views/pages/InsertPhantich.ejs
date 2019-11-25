@@ -12,6 +12,16 @@
 			<tr>
 				<td></td><td><button>Execute</button></td>
 			</tr>
+			
+			<% if(passed){ %>
+			<tr>
+				<td></td><td><p color = "blue"> Success!</p></td>
+			</tr>
+			<% } else { %>
+			<tr>
+				<td></td><td><p color = "red"> Failed!!!</p></td>
+			</tr>
+			<% } %>
 		</table>
 	</form>
 

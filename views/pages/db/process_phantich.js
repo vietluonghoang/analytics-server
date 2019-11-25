@@ -94,14 +94,16 @@ const addPhantich = (request, response) => {
 			}
 			console.log('-- Results: ', results);
 			// if (results.rowCount > 1) {
-				if (error == undefined) {
-					console.log('-- Success');
-					response.status(200).send('{"status":"Success"}')
-				} else {
-					console.log('-- Failed');
-					response.status(200).send('{"status":"Fail"}')
-				}
-			})
+			if (error == undefined) {
+				console.log('-- Success');
+				passed = true
+				response.render('pages/InsertPhantich', passed );
+			} else {
+				console.log('-- Failed');
+				passed = false
+				response.render('pages/InsertPhantich', passed );
+			}
+		})
 	}
 }
 
