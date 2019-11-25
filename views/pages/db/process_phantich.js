@@ -80,7 +80,7 @@ const addPhantich = (request, response) => {
 
 	valid = true 
 
-	if (queryString == undefined || queryString.length() < 1) {
+	if (queryString == undefined || queryString.length < 1) {
 		valid = false
 	}
 
