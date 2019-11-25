@@ -25,7 +25,7 @@
 				<% phantich.forEach(function(r) { %>
 				<% if(r.contentorder == 1) { %> 
 				<tr>
-					<td>
+					<td colspan= "5">
 						<table border="1" cellpadding="5">
 							<tr>
 								<td align="center">Id Key</td>
@@ -58,7 +58,6 @@
 						</table>
 					</td>
 				</tr>
-				<% } %>
 				<tr>
 					<td align="center">Content Order</td>
 					<td align="center">Content</td>
@@ -66,6 +65,8 @@
 					<td align="center">Minhhoa Type</td>
 					<td></td>
 				</tr>
+				<% } %>
+				
 				<tr>
 
 					<td align="center"> <%= r.contentorder %></td>
