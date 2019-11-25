@@ -96,11 +96,11 @@ const addPhantich = (request, response) => {
 			// if (results.rowCount > 1) {
 			if (error == undefined) {
 				console.log('-- Success');
-				passed = true
+				const passed = true
 				response.render('pages/InsertPhantich', passed );
 			} else {
 				console.log('-- Failed');
-				passed = false
+				const passed = false
 				response.render('pages/InsertPhantich', passed );
 			}
 		})
