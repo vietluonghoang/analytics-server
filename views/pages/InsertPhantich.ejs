@@ -13,14 +13,14 @@
 				<td></td><td><button>Execute</button></td>
 			</tr>
 
-			<% if(typeof res != 'undefined'){ %>
-				<% if(res.message != "Error"){ %>
+			<% if(typeof results != 'undefined'){ %>
+				<% if(results.message != "Error"){ %>
 						<tr>
-							<td><p> <font color = "blue"> Success!</font></p></td><td><%= res %></td>
+							<td><p> <font color = "blue"> Success!</font></p></td><td><%= results %></td>
 						</tr>
 				<% } else { %>
 						<tr>
-							<td><p> <font color = "red"> Failed!!!</font></p></td><td><%= res %></td>
+							<td><p> <font color = "red"> Failed!!!</font></p></td><td><%= results %></td>
 						</tr>
 				<% } %>
 			<% } else { %>
@@ -30,6 +30,6 @@
 			<% } %>
 		</table>
 	</form>
-<%= res %>
+<%= results %>
 </body>
 </html>
