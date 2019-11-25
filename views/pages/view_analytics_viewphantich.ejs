@@ -1,16 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<style>
+	#info {
+		font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	#info td, #info th {
+		border: 1px solid #ddd;
+		padding: 8px;
+	}
+
+	#info tr:nth-child(even){background-color: #f2f2f2;}
+
+	#info tr:hover {background-color: #ddd;}
+
+	#info th {
+		padding-top: 12px;
+		padding-bottom: 12px;
+		text-align: left;
+		background-color: #4CAF50;
+		color: white;
+	}
+
+	#headerMenu td {
+		padding-right: 10px;
+		padding-left: 10px;
+		text-align: center;
+		background-color: #f2f2f2;
+	}
+
+	#headerMenu td:hover {
+		background-color: #ddd;
+	}
+
+	</style>
 </head>
 <body>
 	<center>
 		<div class="container">
 			<h2>Analytics Results</h2>
-			<table name = "headerMenu">
+			<table id = "headerMenu">
 				<tr>
 					<td><a href="https://wethoong-server.herokuapp.com/analytics/view/">View all</a></td>
-					<td style="border-style:solid; border-left-width:2px;"><a href="https://wethoong-server.herokuapp.com/analytics/app_open/">View app_open</a></td>
-					<td style="border-style:solid; border-left-width:2px;"><a href="https://wethoong-server.herokuapp.com/analytics/view_phantich/">View view_phantich</a></td>
+					<td><a href="https://wethoong-server.herokuapp.com/analytics/app_open/">View app_open</a></td>
+					<td><a href="https://wethoong-server.herokuapp.com/analytics/view_phantich/">View view_phantich</a></td>
 				</tr>
 			</table>
 			<ul>
@@ -20,7 +56,7 @@
 			</ul>
 			<br>
 			<br>
-			<table border="1" cellpadding="5">
+			<table id = "info">
 				<% var order = 1 %>
 				<tr><td></td><td align="center">PhantichID</td><td align="center">Times of View</td><td align="center"></td></tr>
 				<% phantichCount.forEach(function(r) { %>
