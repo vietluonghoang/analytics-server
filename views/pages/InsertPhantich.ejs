@@ -14,15 +14,15 @@
 			</tr>
 
 			<% if(typeof passed != 'undefined'){ %>
-			<%= passed %>
+				<%= passed %>
 				<% if(passed){ %>
-				<tr>
-					<td></td><td><p> <font color = "blue"> Success!</font></p></td>
-				</tr>
-				<% } else { %>
-				<tr>
-					<td></td><td><p> <font color = "red"> Failed!!!</font></p></td>
-				</tr>
+						<tr>
+							<td></td><td><p> <font color = "blue"> Success!</font></p></td>
+						</tr>
+					<% } else { %>
+						<tr>
+							<td></td><td><p> <font color = "red"> Failed!!!</font></p></td>
+						</tr>
 				<% } %>
 			% } else { %>
 				<tr>
