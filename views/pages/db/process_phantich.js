@@ -93,7 +93,7 @@ const addPhantich = (request, response) => {
 				console.log('-- ERROR: ', error);
 			}
 			console.log('-- Results: ', results);
-			const passed = false
+			var passed = false
 			// if (results.rowCount > 1) {
 			if (error == undefined) {
 				console.log('-- Success');
