@@ -47,6 +47,7 @@
 					<td><a href="https://wethoong-server.herokuapp.com/analytics/view/">View all</a></td>
 					<td><a href="https://wethoong-server.herokuapp.com/analytics/app_open/">View app_open</a></td>
 					<td><a href="https://wethoong-server.herokuapp.com/analytics/view_phantich/">View view_phantich</a></td>
+					<td><a href = "https://wethoong-server.herokuapp.com/phantich/view/"> View all Phantich </a></td>
 				</tr>
 			</table>
 			<ul>
@@ -57,7 +58,7 @@
 			<br>
 			<br>
 			<table id = "info">
-				<tr><td align="center">User's ID for Vendor</td><td align="center">Ads Id</td><td align="center">Device Name</td><td align="center">OS Name</td><td align="center">OS Version</td><td align="center">App Version</td><td align="center">App Version Number</td><td align="center">DB Version</td><td align="center">Open Count</td><td align="center">Timestamp</td></tr>
+				<tr><th align="center">User's ID for Vendor</th><th align="center">Ads Id</th><th align="center">Device Name</th><th align="center">OS Name</th><th align="center">OS Version</th><th align="center">App Version</th><th align="center">App Version Number</th><th align="center">DB Version</th><th align="center">Open Count</th><th align="center">Timestamp</th></tr>
 				<% userDetails.forEach(function(r) { %>
 				<tr><td align="center"><%= r.idforvendor %> </td><td align="center"><%= r.adsid %> </td><td align="center"><%= r.devicename %> </td><td align="center"><%= r.osname %> </td><td align="center"><%= r.osversion %> </td><td align="center"><%= r.appversion %> </td><td align="center"><%= r.appversionnumber %> </td><td align="center"><%= r.dbversion %> </td><td align="center"><%= r.opencount %> </td><td align="center"><%= r.collectiondate %> </td></tr>
 				<% }); %>
